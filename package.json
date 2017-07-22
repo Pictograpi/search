@@ -1,0 +1,31 @@
+{
+  "name": "pictograpi-collaborate",
+  "version": "1.0.0",
+  "description": "A collaboration website for Pictograpi.",
+  "main": "index.js",
+  "scripts": {
+    "_webpack": "webpack --config webpack.conf.js",
+    "_webpack-dev-server": "env DEVELOPMENT=true webpack-dev-server --config webpack.conf.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "npm run _webpack-dev-server",
+    "build": "npm run _webpack"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@bitbucket.org/adgllorente/pictograpi-collaborate.git"
+  },
+  "keywords": [
+    "collaborate",
+    "pictograpi",
+    "pictograph"
+  ],
+  "author": "Adrián Gómez - http://adgllorente.com",
+  "license": "MIT",
+  "homepage": "https://bitbucket.org/adgllorente/pictograpi-collaborate#readme",
+  "devDependencies": {
+    "html-webpack-plugin": "^2.29.0",
+    "loglevel": "^1.4.1",
+    "webpack": "^3.3.0",
+    "webpack-dev-server": "^2.6.0"
+  }
+}
