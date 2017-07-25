@@ -1,26 +1,53 @@
-const path = require('path');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
+const path = require("path");
+const HtmlWebpackPlugin = require("html-webpack-plugin");
+const ExtractTextPlugin = require("extract-text-webpack-plugin");
+const LessPluginGlob = require("less-plugin-glob");
 const DEFAULT_CONFIG = {
-  entry: [
-    './src/index.js'
-  ],
+  entry: ["./src/index.js", "./src/style.less"],
   output: {
-    path: path.resolve(__dirname, 'dist'),
-    filename: '[name].js'
+    path: path.resolve(__dirname, "dist"),
+    filename: "[name].js"
   },
   plugins: [
     new HtmlWebpackPlugin({
-      title: 'Pictograpi Collaborate',
-      hash: true
-    })
+      title: "Pictograpi Collaborate",
+      hash: true,
+      template: "./src/index.ejs"
+    }),
+    new ExtractTextPlugin("[name].css")
   ],
   module: {
-    loaders: []
+    loaders: [
+      {
+        test: /\.js$/,
+        exclude: /node_modules/,
+        loader: "babel-loader"
+      },
+      {
+        test: /\.(woff|woff2|eot|ttf|otf|png|jpg)$/,
+        use: ["file-loader"]
+      },
+      {
+        test: /\.less$/,
+        use: ExtractTextPlugin.extract({
+          fallback: "style-loader",
+          use: [
+            "css-loader",
+            {
+              loader: "less-loader",
+              options: {
+                plugins: [LessPluginGlob],
+                paths: [path.resolve(path.join(__dirname, "src"))]
+              }
+            }
+          ]
+        })
+      }
+    ]
   }
 };
 
-module.exports = (process.env.DEVELOPMENT && createDev()) ||
-  createBuild();
+module.exports = (process.env.DEVELOPMENT && createDev()) || createBuild();
 
 /**
  * Creates dev configuration.
@@ -30,11 +57,12 @@ module.exports = (process.env.DEVELOPMENT && createDev()) ||
 function createDev() {
   let config = Object.assign({}, DEFAULT_CONFIG);
 
-  config.devtool = 'inline-source-map';
+  config.devtool = "inline-source-map";
   config.devServer = {
-    contentBase: path.join(__dirname, 'dist'),
+    contentBase: path.join(__dirname, "dist"),
     compress: true,
-    port: 8080
+    port: 8080,
+    historyApiFallback: true
   };
 
   return config;
