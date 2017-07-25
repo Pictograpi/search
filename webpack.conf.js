@@ -2,6 +2,7 @@ const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
 const LessPluginGlob = require("less-plugin-glob");
+const Dotenv = require("dotenv-webpack");
 const DEFAULT_CONFIG = {
   entry: ["./src/index.js", "./src/style.less"],
   output: {
@@ -14,7 +15,8 @@ const DEFAULT_CONFIG = {
       hash: true,
       template: "./src/index.ejs"
     }),
-    new ExtractTextPlugin("[name].css")
+    new ExtractTextPlugin("[name].css"),
+    new Dotenv()
   ],
   module: {
     loaders: [

@@ -9,6 +9,13 @@ PictograpiCollaborate has been created using ReactJS + Webpack and it offers the
 
 # Configuration
 PictograpiCollaborate needs some properties to work. These properties must be set using environmnent properties or creating a ``/.env`` file.
+```
+# Firebase configuration
+FIREBASE_API_KEY
+FIREBASE_AUTH_DOMAIN
+FIREBASE_DATABASE_URL
+FIREBASE_PROJECT_ID
+```
 
 # Credits
 - [Joe Shillington](http://unsplash.com/photos/DpF8nI-dQKA?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText) on [Unsplash](https://unsplash.com/?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText)
