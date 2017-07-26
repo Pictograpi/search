@@ -1,23 +1,30 @@
 import React, { Component } from "react";
 import { auth } from "firebase";
 import swal from "sweetalert2";
+import Store from "../../reducers/Store";
 
 export default class Header extends Component {
   /**
-   * Launches the login flow.
+   * Signs in a user.
    * 
    * @memberof Header
    */
-  async doLogin() {
+  async signIn() {
     let result, token, user;
     const provider = new auth.FacebookAuthProvider();
 
     try {
       result = await auth().signInWithPopup(provider);
-      token = result.credential.accessToken;
-      user = result.user;
-
-      swal("You're logged in!");
+      Store.dispatch({
+        type: "SET_USER",
+        payload: {
+          token: result.credential.accessToken,
+          email: result.user.email,
+          name: result.user.displayName,
+          photo: result.user.photoURL
+        }
+      });
+      swal(`Hi ${result.additionalUserInfo.profile.first_name}!`);
     } catch (error) {
       swal(
         "Oops!",
@@ -28,11 +35,37 @@ export default class Header extends Component {
   }
 
   /**
-   * Renders the component.
+   * Signs out current user.
    * 
-   * @returns {JSX} JSX code.
    * @memberof Header
    */
+  async singOut() {
+    await auth().signOut();
+    Store.dispatch({
+      type: "REMOVE_USER"
+    });
+  }
+
+  /**
+   * Loads user data from Store.
+   * 
+   * @memberof Header
+   */
+  loadUserData() {
+    const userState = Store.getState().user;
+
+    this.setState({
+      isLoggedIn: userState.isLoggedIn,
+      photo: userState.photo
+    });
+  }
+
+  componentWillMount() {
+    this.loadUserData();
+
+    Store.subscribe(() => this.loadUserData());
+  }
+
   render() {
     return (
       <header className="pc-header pc-container">
@@ -42,17 +75,29 @@ export default class Header extends Component {
               PictograpiCollaborate
             </a>
           </h1>
-          <nav className="pc-header--navigation">
-            <a className="pc-header--navigation-link" onClick={this.doLogin}>
-              Login
-            </a>
-            <a
-              className="pc-header--navigation-link"
-              href="http://pictograpi.com/#contact"
-            >
-              Contact Us
-            </a>
-          </nav>
+          <div className="pc-header--menu">
+            <nav className="pc-header--navigation">
+              {!this.state.isLoggedIn &&
+                <a className="pc-header--navigation-link" onClick={this.signIn}>
+                  Sign in
+                </a>}
+              {this.state.isLoggedIn &&
+                <a
+                  className="pc-header--navigation-link"
+                  onClick={this.singOut}
+                >
+                  Sing out
+                </a>}
+              <a
+                className="pc-header--navigation-link"
+                href="http://pictograpi.com/#contact"
+              >
+                Contact Us
+              </a>
+            </nav>
+            {this.state.isLoggedIn &&
+              <img className="pc-header--photo" src={this.state.photo} />}
+          </div>
         </div>
       </header>
     );
