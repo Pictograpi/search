@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Link } from "react-router-dom";
 import { auth } from "firebase";
 import swal from "sweetalert2";
 import Store from "../../stores/Store";
@@ -68,9 +69,9 @@ export default class Header extends Component {
       <header className="pc-header pc-container">
         <div className="pc-header--wrapper pc-container--content">
           <h1 className="pc-header--logo">
-            <a className="pc-header--logo-link" href="/">
+            <Link to="/" className="pc-header--logo-link">
               PictograpiCollaborate
-            </a>
+            </Link>
           </h1>
           <div className="pc-header--menu">
             <nav className="pc-header--navigation">
@@ -88,6 +89,7 @@ export default class Header extends Component {
               <a
                 className="pc-header--navigation-link"
                 href="http://pictograpi.com/#contact"
+                target="_blank"
               >
                 Contact Us
               </a>

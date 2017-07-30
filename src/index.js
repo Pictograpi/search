@@ -1,8 +1,9 @@
 import React, { Component } from "react";
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import { BrowserRouter, Route, Link } from "react-router-dom";
 import { render } from "react-dom";
 import firebase from "firebase";
-import Layout from "./components/Layout";
+import Header from "./components/Header";
+import Footer from "./components/Footer";
 import Home from "./views/Home";
 import Store from "./stores/Store";
 
@@ -29,13 +30,12 @@ firebase.auth().onAuthStateChanged(function(user) {
 });
 
 render(
-  <Layout>
-    <Router>
-      <div>
-        <Route exact path="/" component={Home} />
-        {/*<Route path="/admin" component={Admin} />*/}
-      </div>
-    </Router>
-  </Layout>,
+  <BrowserRouter>
+    <div>
+      <Header />
+      <Route exact path="/" component={Home} />
+      <Footer />
+    </div>
+  </BrowserRouter>,
   document.getElementById("app-container")
 );

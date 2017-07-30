@@ -4,6 +4,7 @@
 @import "~sweetalert2/dist/sweetalert2.css";
 @import url('https://fonts.googleapis.com/css?family=Quicksand');
 @import "components/**/style.less";
+@import "views/**/style.less";
 
 // General
 body {
@@ -59,5 +60,19 @@ button {
 
   &:hover {
     background-color: darken(#00c78a, 10%);
+  }
+}
+
+// Layout
+.pc-app--main {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  min-height: 100vh;
+
+  > div {
+    display: flex;
+    flex-grow: 1;
+    flex-direction: column;
   }
 }
