@@ -6,8 +6,11 @@
   &--content {
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between;
-    min-height: 916px;
+    justify-content: flex-start;
+  }
+
+  &--wrapper {
+    margin-bottom: 50px;
   }
 
   &--title {
@@ -17,10 +20,13 @@
   }
 
   &--pic {
-    border: 5px solid grey;
+    border: 5px solid #fff;
     flex-basis: 15%;
-    margin: 20px 0;
     height: auto;
+
+    &:hover {
+      border: 5px solid #00c78a;
+    }
   }
 
   &--image {

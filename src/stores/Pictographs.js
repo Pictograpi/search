@@ -1,22 +1,38 @@
 import Store from "./Store";
-import { getLastPictographs, getTotalPictographs } from "../services/api";
+import {
+  getLastPictographs,
+  getTotalPictographs,
+  getPictographsByQuery
+} from "../services/api";
 
-const PictogramReducer = (state = [], action) => {
+const LIMIT_PER_PAGE = 24;
+
+const PictographReducer = (state = [], action) => {
   switch (action.type) {
-    case "PICTOGRAMS_FETCH_LAST": {
+    case "PICTOGRAPHS_FETCH_LAST": {
       state = {
         ...state,
-        isLoading: false,
-        isError: false,
-        last: action.payload.last
+        isSearch: false,
+        last: action.payload.items
       };
       break;
     }
-    case "PICTOGRAMS_FETCH_TOTAL": {
+    case "PICTOGRAPHS_FETCH_TOTAL": {
       state = {
         ...state,
         total: action.payload.total
       };
+      break;
+    }
+    case "PICTOGRAPHS_FETCH_SEARCH": {
+      state = {
+        ...state,
+        isSearch: true,
+        found: action.payload.items,
+        query: action.payload.query,
+        totalFound: action.payload.total
+      };
+      break;
     }
   }
 
@@ -31,11 +47,11 @@ const PictogramReducer = (state = [], action) => {
  */
 function pictographsFetchLastSuccess(pictographs) {
   return {
-    type: "PICTOGRAMS_FETCH_LAST",
+    type: "PICTOGRAPHS_FETCH_LAST",
     payload: {
-      last: pictographs.map(pictogram => ({
-        url: pictogram.url,
-        id: pictogram.id
+      items: pictographs.map(pictograph => ({
+        url: pictograph.url,
+        id: pictograph.id
       }))
     }
   };
@@ -49,14 +65,36 @@ function pictographsFetchLastSuccess(pictographs) {
  */
 function pictographsFetchTotalSuccess(response) {
   return {
-    type: "PICTOGRAMS_FETCH_TOTAL",
+    type: "PICTOGRAPHS_FETCH_TOTAL",
     payload: {
       total: response.count
     }
   };
 }
 
-export default PictogramReducer;
+/**
+ * Action launched when fecthing pictographs by query success.
+ *
+ * @param {any} response
+ * @param {string} query
+ * @returns
+ */
+function pictographsFetchSearchSuccess(response, query) {
+  return {
+    type: "PICTOGRAPHS_FETCH_SEARCH",
+    payload: {
+      items: response.pictographs.map(pictograph => ({
+        url: pictograph.image.url,
+        id: pictograph.imageId,
+        pictographId: pictograph.id
+      })),
+      total: response.total,
+      query
+    }
+  };
+}
+
+export default PictographReducer;
 
 /**
  * Fetch last pictographs.
@@ -65,11 +103,10 @@ export default PictogramReducer;
  * @returns
  */
 export function pictographsFetchLast(page) {
-  const limit = 24;
-  const offset = page * limit;
+  const offset = page * LIMIT_PER_PAGE;
 
   return async dispatch => {
-    let response = await getLastPictographs(offset, limit);
+    let response = await getLastPictographs(offset, LIMIT_PER_PAGE);
 
     dispatch(pictographsFetchLastSuccess(response));
   };
@@ -80,5 +117,15 @@ export function pictographsFetchTotal() {
     let response = await getTotalPictographs();
 
     dispatch(pictographsFetchTotalSuccess(response));
+  };
+}
+
+export function pictographsSearch(query, page) {
+  const offset = page * LIMIT_PER_PAGE;
+
+  return async dispatch => {
+    let response = await getPictographsByQuery(query);
+
+    dispatch(pictographsFetchSearchSuccess(response, query));
   };
 }

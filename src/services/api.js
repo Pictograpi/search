@@ -43,17 +43,82 @@ async function start() {
   return Promise.resolve();
 }
 
+/**
+ * Obtains last pictographs with a given offset and limit.
+ *
+ * @export
+ * @param {number} offset
+ * @param {number} limit
+ * @returns {Promise} To be resolved with an Array of pictographs.
+ */
 export function getLastPictographs(offset, limit) {
   return doGet("Images", {
     filter: JSON.stringify({
       offset,
       limit,
       order: "created DESC",
-      include: ["pictograms"]
+      fields: ["id", "url"]
     })
   });
 }
 
+/**
+ * Obtains total pictographs in the API.
+ *
+ * @export
+ * @returns {Promise} To be resolved with a number.
+ */
 export function getTotalPictographs() {
   return doGet("Pictograms/count");
+}
+
+export async function getPictographsByQueryTotal(query) {
+  return doGet("Pictograms/count", {
+    where: {
+      term: {
+        like: query
+      },
+      languageId: "58fa1b203852d50029a048a7"
+    }
+  });
+}
+
+/**
+ * Obtains pictographs with a given query.
+ *
+ * @export
+ * @param {string} query
+ * @returns {Promise} To be resolved with an Array of pictographs.
+ */
+export async function getPictographsByQuery(query) {
+  const pictographs = await doGet("Pictograms", {
+    filter: JSON.stringify({
+      limit: 24,
+      where: {
+        term: {
+          like: query
+        },
+        languageId: "58fa1b203852d50029a048a7"
+      },
+      include: {
+        relation: "image",
+        scope: {
+          fields: ["url"]
+        }
+      }
+    })
+  });
+  const total = await doGet("Pictograms/count", {
+    where: JSON.stringify({
+      term: {
+        like: query
+      },
+      languageId: "58fa1b203852d50029a048a7"
+    })
+  });
+
+  return {
+    pictographs,
+    total: total.count
+  };
 }

@@ -1,17 +1,12 @@
 import React, { Component } from "react";
 import Store from "../../stores/Store";
-import {
-  pictographsFetchLast,
-  pictographsFetchTotal
-} from "../../stores/Pictographs";
+import { pictographsFetchLast } from "../../stores/Pictographs";
 import queryString from "query-string";
 
 export default class Grid extends Component {
   constructor() {
     super();
-    this.state = {
-      page: 0
-    };
+    this.state = {};
   }
 
   /**
@@ -20,25 +15,16 @@ export default class Grid extends Component {
    * @param {any} pageToLoad
    * @memberof Grid
    */
-  loadPage(pageToLoad) {
-    if (pageToLoad !== this.state.page) {
-      Store.dispatch(pictographsFetchLast(pageToLoad));
-      this.setState({
-        page: pageToLoad,
-        pictographs: []
-      });
-    }
-  }
+  loadPage(pageToLoad) {}
 
   componentWillMount() {
-    Store.dispatch(pictographsFetchLast(0));
-
     Store.subscribe(() => {
       const pictographsStore = Store.getState().pictographs;
 
       this.setState({
-        pictographs: pictographsStore.last || [],
-        total: pictographsStore.total
+        found: pictographsStore.found,
+        totalFound: pictographsStore.totalFound,
+        query: pictographsStore.query
       });
     });
   }
@@ -63,29 +49,35 @@ export default class Grid extends Component {
 
     return (
       <div className="pc-container pc-grid">
-        <h1 className="pc-grid--title">Last pictographs included</h1>
-        <div className="pc-container--content pc-grid--content">
-          {(this.state.pictographs || []).map(pictogram => {
-            return (
-              <a
-                key={pictogram.id}
-                href={`pictogram?id=${pictogram.id}`}
-                className="pc-grid--pic"
-              >
-                <img className="pc-grid--image" src={pictogram.url} />
-              </a>
-            );
-          })}
-        </div>
-        <div className="pc-grid--pagination">
-          {paginationButtons}
-          <button
-            className="pc-grid--pagination-item"
-            onClick={() => this.loadPage(this.state.page + 1)}
-          >
-            Next
-          </button>
-        </div>
+        {this.state.found &&
+          <div className="pc-grid--wrapper">
+            <h1 className="pc-grid--title">
+              {this.state.totalFound} pictographs found for "{this.state.query}"
+            </h1>
+            <div className="pc-container--content pc-grid--content">
+              {this.state.found.map(pictograph => {
+                return (
+                  <a
+                    key={pictograph.pictographId}
+                    href={`pictograph?id=${pictograph.id}`}
+                    className="pc-grid--pic"
+                  >
+                    <img className="pc-grid--image" src={pictograph.url} />
+                  </a>
+                );
+              })}
+            </div>
+            {this.state.found > 24 &&
+              <div className="pc-grid--pagination">
+                {paginationButtons}
+                <button
+                  className="pc-grid--pagination-item"
+                  onClick={() => this.loadPage(this.state.page + 1)}
+                >
+                  Next
+                </button>
+              </div>}
+          </div>}
       </div>
     );
   }
