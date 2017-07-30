@@ -23,7 +23,7 @@ const DEFAULT_CONFIG = {
       {
         test: /\.js$/,
         exclude: /node_modules/,
-        loader: "babel-loader"
+        use: ["babel-loader", "eslint-loader"]
       },
       {
         test: /\.(woff|woff2|eot|ttf|otf|png|jpg)$/,
@@ -53,7 +53,7 @@ module.exports = (process.env.DEVELOPMENT && createDev()) || createBuild();
 
 /**
  * Creates dev configuration.
- * 
+ *
  * @returns {Object} Webpack configuration
  */
 function createDev() {
@@ -72,7 +72,7 @@ function createDev() {
 
 /**
  * Craetes build configuration.
- * 
+ *
  * @returns {Object} Webpack configuration
  */
 function createBuild() {

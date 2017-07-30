@@ -1,3 +1,20 @@
 {
-  "extends": "eslint:recommended"
+  "extends": "prettier",
+  "env": {
+    "es6": true
+  },
+  "parserOptions": {
+    "ecmaVersion": 8,
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "jsx": true,
+      "spread": true,
+      "experimentalObjectRestSpread": true
+    }
+  },
+  "rules": {
+    "no-trailing-spaces": ["error", { "ignoreComments": false }],
+    "prettier/prettier": "error"
+  },
+  "plugins": ["prettier"]
 }

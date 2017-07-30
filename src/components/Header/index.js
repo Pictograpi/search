@@ -7,7 +7,7 @@ import { setUser, removeUser } from "../../stores/User";
 export default class Header extends Component {
   /**
    * Signs in a user.
-   * 
+   *
    * @memberof Header
    */
   async signIn() {
@@ -36,7 +36,7 @@ export default class Header extends Component {
 
   /**
    * Signs out current user.
-   * 
+   *
    * @memberof Header
    */
   async singOut() {
@@ -46,7 +46,7 @@ export default class Header extends Component {
 
   /**
    * Loads user data from Store.
-   * 
+   *
    * @memberof Header
    */
   loadUserData() {

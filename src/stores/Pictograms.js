@@ -25,8 +25,8 @@ const PictogramReducer = (state = [], action) => {
 
 /**
  * Action launched when fecthing last success.
- * 
- * @param {any} pictograms 
+ *
+ * @param {any} pictograms
  * @returns
  */
 function pictogramsFetchLastSuccess(pictograms) {
@@ -43,7 +43,7 @@ function pictogramsFetchLastSuccess(pictograms) {
 
 /**
  * Action launched when fecthing total success.
- * 
+ *
  * @param {any} total
  * @returns
  */
@@ -60,7 +60,7 @@ export default PictogramReducer;
 
 /**
  * Fetch last pictograms.
- * 
+ *
  * @export
  * @returns
  */

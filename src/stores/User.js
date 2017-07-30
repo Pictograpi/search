@@ -30,7 +30,7 @@ export default UserReducer;
 
 /**
  * Stores user information.
- * 
+ *
  * @export
  * @param {string} token
  * @param {string} email
@@ -52,7 +52,7 @@ export function setUser(token, email, name, photo) {
 
 /**
  * Removes user infromation.
- * 
+ *
  * @export
  * @returns {Object} Action
  */

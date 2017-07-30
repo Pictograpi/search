@@ -7,6 +7,7 @@
     "_webpack": "webpack --config webpack.conf.js",
     "_webpack-dev-server": "env DEVELOPMENT=true webpack-dev-server --config webpack.conf.js",
     "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "eslint ./src/**/*.js",
     "dev": "npm run _webpack-dev-server",
     "build": "npm run _webpack"
   },
@@ -31,6 +32,10 @@
     "babel-preset-stage-2": "^6.24.1",
     "css-loader": "^0.28.4",
     "dotenv-webpack": "^1.5.4",
+    "eslint": "^4.3.0",
+    "eslint-config-prettier": "^2.3.0",
+    "eslint-loader": "^1.9.0",
+    "eslint-plugin-prettier": "^2.1.2",
     "extract-loader": "^0.1.0",
     "extract-text-webpack-plugin": "^3.0.0",
     "file-loader": "^0.11.2",
@@ -39,6 +44,7 @@
     "less-loader": "^4.0.5",
     "less-plugin-glob": "^2.0.0",
     "loglevel": "^1.4.1",
+    "prettier": "^1.5.3",
     "style-loader": "^0.18.2",
     "webpack": "^3.3.0",
     "webpack-dev-server": "^2.6.0"

@@ -16,8 +16,8 @@ export default class Grid extends Component {
 
   /**
    * Loads a given page.
-   * 
-   * @param {any} pageToLoad 
+   *
+   * @param {any} pageToLoad
    * @memberof Grid
    */
   loadPage(pageToLoad) {
