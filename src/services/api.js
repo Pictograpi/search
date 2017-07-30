@@ -90,10 +90,11 @@ export async function getPictographsByQueryTotal(query) {
  * @param {string} query
  * @returns {Promise} To be resolved with an Array of pictographs.
  */
-export async function getPictographsByQuery(query) {
+export async function getPictographsByQuery(query, offset, limit) {
   const pictographs = await doGet("Pictograms", {
     filter: JSON.stringify({
-      limit: 24,
+      offset,
+      limit,
       where: {
         term: {
           like: query

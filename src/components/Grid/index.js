@@ -1,12 +1,18 @@
 import React, { Component } from "react";
 import Store from "../../stores/Store";
-import { pictographsFetchLast } from "../../stores/Pictographs";
+import {
+  pictographsFetchLast,
+  pictographsSearch
+} from "../../stores/Pictographs";
 import queryString from "query-string";
 
 export default class Grid extends Component {
   constructor() {
     super();
-    this.state = {};
+    this.state = {
+      page: 0,
+      totalFound: 0
+    };
   }
 
   /**
@@ -15,7 +21,12 @@ export default class Grid extends Component {
    * @param {any} pageToLoad
    * @memberof Grid
    */
-  loadPage(pageToLoad) {}
+  loadPage(pageToLoad) {
+    this.setState({
+      page: pageToLoad
+    });
+    Store.dispatch(pictographsSearch(this.state.query, pageToLoad));
+  }
 
   componentWillMount() {
     Store.subscribe(() => {
@@ -30,6 +41,10 @@ export default class Grid extends Component {
   }
 
   render() {
+    const showNextButton =
+      (this.state.page === 0 && this.state.totalFound > 24) ||
+      this.state.totalFound / ((this.state.page + 1) * 24) >= 1;
+    const showPagination = this.state.totalFound > 24;
     let paginationButtons = [];
 
     for (let i = 0; i <= this.state.page; i++) {
@@ -67,15 +82,16 @@ export default class Grid extends Component {
                 );
               })}
             </div>
-            {this.state.found > 24 &&
+            {showPagination &&
               <div className="pc-grid--pagination">
                 {paginationButtons}
-                <button
-                  className="pc-grid--pagination-item"
-                  onClick={() => this.loadPage(this.state.page + 1)}
-                >
-                  Next
-                </button>
+                {showNextButton &&
+                  <button
+                    className="pc-grid--pagination-item"
+                    onClick={() => this.loadPage(this.state.page + 1)}
+                  >
+                    Next
+                  </button>}
               </div>}
           </div>}
       </div>

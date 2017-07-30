@@ -124,7 +124,7 @@ export function pictographsSearch(query, page) {
   const offset = page * LIMIT_PER_PAGE;
 
   return async dispatch => {
-    let response = await getPictographsByQuery(query);
+    let response = await getPictographsByQuery(query, offset, LIMIT_PER_PAGE);
 
     dispatch(pictographsFetchSearchSuccess(response, query));
   };
