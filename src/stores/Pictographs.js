@@ -1,5 +1,5 @@
 import Store from "./Store";
-import { getLastPictograms, getTotalPictograms } from "../services/api";
+import { getLastPictographs, getTotalPictographs } from "../services/api";
 
 const PictogramReducer = (state = [], action) => {
   switch (action.type) {
@@ -26,14 +26,14 @@ const PictogramReducer = (state = [], action) => {
 /**
  * Action launched when fecthing last success.
  *
- * @param {any} pictograms
+ * @param {any} pictographs
  * @returns
  */
-function pictogramsFetchLastSuccess(pictograms) {
+function pictographsFetchLastSuccess(pictographs) {
   return {
     type: "PICTOGRAMS_FETCH_LAST",
     payload: {
-      last: pictograms.map(pictogram => ({
+      last: pictographs.map(pictogram => ({
         url: pictogram.url,
         id: pictogram.id
       }))
@@ -47,7 +47,7 @@ function pictogramsFetchLastSuccess(pictograms) {
  * @param {any} total
  * @returns
  */
-function pictogramsFetchTotalSuccess(response) {
+function pictographsFetchTotalSuccess(response) {
   return {
     type: "PICTOGRAMS_FETCH_TOTAL",
     payload: {
@@ -59,26 +59,26 @@ function pictogramsFetchTotalSuccess(response) {
 export default PictogramReducer;
 
 /**
- * Fetch last pictograms.
+ * Fetch last pictographs.
  *
  * @export
  * @returns
  */
-export function pictogramsFetchLast(page) {
+export function pictographsFetchLast(page) {
   const limit = 24;
   const offset = page * limit;
 
   return async dispatch => {
-    let response = await getLastPictograms(offset, limit);
+    let response = await getLastPictographs(offset, limit);
 
-    dispatch(pictogramsFetchLastSuccess(response));
+    dispatch(pictographsFetchLastSuccess(response));
   };
 }
 
-export function pictogramsFetchTotal() {
+export function pictographsFetchTotal() {
   return async dispatch => {
-    let response = await getTotalPictograms();
+    let response = await getTotalPictographs();
 
-    dispatch(pictogramsFetchTotalSuccess(response));
+    dispatch(pictographsFetchTotalSuccess(response));
   };
 }

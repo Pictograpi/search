@@ -43,7 +43,7 @@ async function start() {
   return Promise.resolve();
 }
 
-export function getLastPictograms(offset, limit) {
+export function getLastPictographs(offset, limit) {
   return doGet("Images", {
     filter: JSON.stringify({
       offset,
@@ -54,6 +54,6 @@ export function getLastPictograms(offset, limit) {
   });
 }
 
-export function getTotalPictograms() {
+export function getTotalPictographs() {
   return doGet("Pictograms/count");
 }

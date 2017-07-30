@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import Store from "../../stores/Store";
 import {
-  pictogramsFetchLast,
-  pictogramsFetchTotal
-} from "../../stores/Pictograms";
+  pictographsFetchLast,
+  pictographsFetchTotal
+} from "../../stores/Pictographs";
 import queryString from "query-string";
 
 export default class Grid extends Component {
@@ -22,23 +22,23 @@ export default class Grid extends Component {
    */
   loadPage(pageToLoad) {
     if (pageToLoad !== this.state.page) {
-      Store.dispatch(pictogramsFetchLast(pageToLoad));
+      Store.dispatch(pictographsFetchLast(pageToLoad));
       this.setState({
         page: pageToLoad,
-        pictograms: []
+        pictographs: []
       });
     }
   }
 
   componentWillMount() {
-    Store.dispatch(pictogramsFetchLast(0));
+    Store.dispatch(pictographsFetchLast(0));
 
     Store.subscribe(() => {
-      const pictogramsStore = Store.getState().pictograms;
+      const pictographsStore = Store.getState().pictographs;
 
       this.setState({
-        pictograms: pictogramsStore.last || [],
-        total: pictogramsStore.total
+        pictographs: pictographsStore.last || [],
+        total: pictographsStore.total
       });
     });
   }
@@ -65,7 +65,7 @@ export default class Grid extends Component {
       <div className="pc-container pc-grid">
         <h1 className="pc-grid--title">Last pictographs included</h1>
         <div className="pc-container--content pc-grid--content">
-          {(this.state.pictograms || []).map(pictogram => {
+          {(this.state.pictographs || []).map(pictogram => {
             return (
               <a
                 key={pictogram.id}

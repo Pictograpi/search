@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import Store from "../../stores/Store";
-import { pictogramsFetchTotal } from "../../stores/Pictograms";
+import { pictographsFetchTotal } from "../../stores/Pictographs";
 
 export default class Search extends Component {
   constructor() {
@@ -8,11 +8,11 @@ export default class Search extends Component {
     this.state = {};
   }
   componentWillMount() {
-    Store.dispatch(pictogramsFetchTotal());
+    Store.dispatch(pictographsFetchTotal());
 
     Store.subscribe(() =>
       this.setState({
-        total: Store.getState().pictograms.total
+        total: Store.getState().pictographs.total
       })
     );
   }
