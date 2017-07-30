@@ -1,11 +1,27 @@
 import React, { Component } from "react";
+import Store from "../../stores/Store";
+import { pictogramsFetchTotal } from "../../stores/Pictograms";
 
 export default class Search extends Component {
+  constructor() {
+    super();
+    this.state = {};
+  }
+  componentWillMount() {
+    Store.dispatch(pictogramsFetchTotal());
+
+    Store.subscribe(() =>
+      this.setState({
+        total: Store.getState().pictograms.total
+      })
+    );
+  }
+
   render() {
     return (
       <div className="pc-search">
         <h1 className="pc-search--title">
-          Find over 350.000 pictographs in different languages
+          We have {this.state.total} pictographs in different languages.
         </h1>
         <form className="pc-search--form">
           <input type="text" id="searchterm" placeholder="what do you want ?" />

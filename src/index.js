@@ -3,8 +3,8 @@ import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import { render } from "react-dom";
 import firebase from "firebase";
 import Layout from "./components/Layout";
-import Home from "./screens/Home";
-import Store from "./reducers/Store";
+import Home from "./views/Home";
+import Store from "./stores/Store";
 
 // Initialize Firebase.
 firebase.initializeApp({
@@ -17,7 +17,7 @@ firebase.initializeApp({
 firebase.auth().onAuthStateChanged(function(user) {
   if (user) {
     Store.dispatch({
-      type: "SET_USER",
+      type: "USER_SET",
       payload: {
         token: user.refreshToken,
         email: user.email,

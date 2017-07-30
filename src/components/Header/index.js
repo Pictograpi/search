@@ -1,7 +1,8 @@
 import React, { Component } from "react";
 import { auth } from "firebase";
 import swal from "sweetalert2";
-import Store from "../../reducers/Store";
+import Store from "../../stores/Store";
+import { setUser, removeUser } from "../../stores/User";
 
 export default class Header extends Component {
   /**
@@ -15,15 +16,14 @@ export default class Header extends Component {
 
     try {
       result = await auth().signInWithPopup(provider);
-      Store.dispatch({
-        type: "SET_USER",
-        payload: {
-          token: result.credential.accessToken,
-          email: result.user.email,
-          name: result.user.displayName,
-          photo: result.user.photoURL
-        }
-      });
+      Store.dispatch(
+        setUser(
+          result.credential.accessToken,
+          result.user.email,
+          result.user.displayName,
+          result.user.photoURL
+        )
+      );
       swal(`Hi ${result.additionalUserInfo.profile.first_name}!`);
     } catch (error) {
       swal(
@@ -41,9 +41,7 @@ export default class Header extends Component {
    */
   async singOut() {
     await auth().signOut();
-    Store.dispatch({
-      type: "REMOVE_USER"
-    });
+    Store.dispatch(removeUser());
   }
 
   /**
@@ -62,7 +60,6 @@ export default class Header extends Component {
 
   componentWillMount() {
     this.loadUserData();
-
     Store.subscribe(() => this.loadUserData());
   }
 

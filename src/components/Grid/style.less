@@ -1,6 +1,51 @@
 .pc-grid {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  &--content {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    min-height: 916px;
+  }
+
   &--title {
     text-align: center;
     margin: 30px 0;
+    flex-basis: 100%;
+  }
+
+  &--pic {
+    border: 5px solid grey;
+    flex-basis: 15%;
+    margin: 20px 0;
+    height: auto;
+  }
+
+  &--image {
+    width: 100%;
+    height: auto;
+  }
+
+  &--pagination {
+    flex-basis: 100%;
+    margin: 20px 0;
+    display: flex;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+  }
+
+  &--pagination-item {
+    padding: 5px 10px;
+    margin: 2px;
+    font-size: 30px;
+    min-width: 40px;
+
+    &__selected {
+      background-color: white;
+      border: 3px solid #00c78a;
+      color: #00c78a;
+    }
   }
 }
