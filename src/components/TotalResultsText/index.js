@@ -8,15 +8,29 @@ export default class TotalResultsText extends Component {
   }
 
   componentWillMount() {
+    this.setState({
+      query: this.props.query
+    });
+
     Store.subscribe(() => {
-      // TODO: Add total results.
+      const pictographsStore = Store.getState().pictographs;
+
+      this.setState({
+        totalFound: pictographsStore.totalFound
+      });
+    });
+  }
+
+  componentWillReceiveProps(newProps) {
+    this.setState({
+      query: newProps.query
     });
   }
 
   render() {
     return (
       <p className="pc-search--results-message">
-        98.700.000 results for {this.props.query}
+        {this.state.totalFound} results for {this.state.query}
       </p>
     );
   }
