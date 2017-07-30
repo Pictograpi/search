@@ -20,8 +20,10 @@ export default class Search extends Component {
           <div className="pc-container--content">
             <SearchForm history={this.props.history} query={query} />
             <TotalResultsText query={query} />
-            <Grid history={this.props.history} query={query} />
           </div>
+        </div>
+        <div className="pc-container--content pc-search--results-wrapper">
+          <Grid history={this.props.history} query={query} />
         </div>
       </div>
     );
