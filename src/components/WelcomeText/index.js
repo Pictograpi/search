@@ -20,7 +20,7 @@ export default class Welcome extends Component {
 
   render() {
     return (
-      <h1 className="pc-welcome">
+      <h1 className="pc-welcome-text">
         We have {this.state.total} pictographs in different languages.
       </h1>
     );

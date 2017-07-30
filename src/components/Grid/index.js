@@ -29,6 +29,10 @@ export default class Grid extends Component {
   }
 
   componentWillMount() {
+    const query = this.props.history.location.pathname.substr(
+      this.props.history.location.pathname.lastIndexOf("/") + 1
+    );
+
     Store.subscribe(() => {
       const pictographsStore = Store.getState().pictographs;
 

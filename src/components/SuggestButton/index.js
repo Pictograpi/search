@@ -8,7 +8,7 @@ export default class Suggest extends Component {
 
   render() {
     return (
-      <button className="pc-suggest" type="button">
+      <button className="pc-suggest-button" type="button">
         Suggest your own pictograph
       </button>
     );

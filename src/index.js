@@ -5,6 +5,7 @@ import firebase from "firebase";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import Home from "./views/Home";
+import Search from "./views/Search";
 import Store from "./stores/Store";
 
 // Initialize Firebase.
@@ -34,6 +35,7 @@ render(
     <div>
       <Header />
       <Route exact path="/" component={Home} />
+      <Route path="/search/:query" component={Search} />
       <Footer />
     </div>
   </BrowserRouter>,
