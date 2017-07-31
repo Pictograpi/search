@@ -1,25 +1,11 @@
 import React, { Component } from "react";
 import Store from "../../stores/Store";
 import { pictographsSearch } from "../../stores/Pictographs";
-import Pagination from "../Pagination";
 
 export default class Grid extends Component {
   constructor() {
     super();
     this.state = {};
-  }
-
-  /**
-   * Loads a given page.
-   *
-   * @param {any} pageToLoad
-   * @memberof Grid
-   */
-  loadPage(pageToLoad) {
-    this.setState({
-      page: pageToLoad
-    });
-    Store.dispatch(pictographsSearch(this.state.query, pageToLoad));
   }
 
   handleClickImage(event, id) {
@@ -28,7 +14,9 @@ export default class Grid extends Component {
   }
 
   componentWillMount() {
-    Store.dispatch(pictographsSearch(this.props.query, 0));
+    this.setState({ page: this.props.page });
+
+    Store.dispatch(pictographsSearch(this.props.query, this.props.page));
 
     Store.subscribe(() => {
       const pictographsStore = Store.getState().pictographs;
@@ -43,7 +31,7 @@ export default class Grid extends Component {
     this.setState({
       found: []
     });
-    Store.dispatch(pictographsSearch(nextProps.query, 0));
+    Store.dispatch(pictographsSearch(nextProps.query, nextProps.page));
   }
 
   render() {
@@ -64,7 +52,6 @@ export default class Grid extends Component {
         <div className="pc-grid--content">
           {pictographElements}
         </div>
-        <Pagination />
       </div>
     );
   }

@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import SearchForm from "../../components/SearchForm";
 import TotalResultsText from "../../components/TotalResultsText";
 import Grid from "../../components/Grid";
+import Pagination from "../../components/Pagination";
+import queryString from "query-string";
 
 export default class Search extends Component {
   constructor(props) {
@@ -13,6 +15,7 @@ export default class Search extends Component {
     const query = this.props.history.location.pathname.substr(
       this.props.history.location.pathname.lastIndexOf("/") + 1
     );
+    const page = queryString.parse(this.props.history.location.search).page;
 
     return (
       <div className="pc-container pc-search">
@@ -23,7 +26,8 @@ export default class Search extends Component {
           </div>
         </div>
         <div className="pc-container--content pc-search--results-wrapper">
-          <Grid history={this.props.history} query={query} />
+          <Grid history={this.props.history} query={query} page={page} />
+          <Pagination page={page} history={this.props.history} />
         </div>
       </div>
     );

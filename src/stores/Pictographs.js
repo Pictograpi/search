@@ -5,7 +5,7 @@ import {
   getPictographsByQuery
 } from "../services/api";
 
-const LIMIT_PER_PAGE = 24;
+const LIMIT_PER_PAGE = 25;
 
 const PictographReducer = (state = [], action) => {
   switch (action.type) {
