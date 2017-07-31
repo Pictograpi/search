@@ -1,6 +1,9 @@
 import React, { Component } from "react";
 import Store from "../../stores/Store";
-import { pictographsByImageId, imageById } from "../../stores/Pictographs";
+import {
+  fetchPictographsByImageId,
+  fetchImageById
+} from "../../stores/Pictographs";
 
 export default class Pictograph extends Component {
   constructor(props) {
@@ -20,10 +23,10 @@ export default class Pictograph extends Component {
       this.props.history.location.pathname.lastIndexOf("/") + 1
     );
 
-    Store.dispatch(pictographsByImageId(id));
-    Store.dispatch(imageById(id));
+    Store.dispatch(fetchPictographsByImageId(id));
+    Store.dispatch(fetchImageById(id));
 
-    Store.subscribe(() => {
+    this.unsubscribe = Store.subscribe(() => {
       const pictographsStore = Store.getState().pictographs;
 
       this.setState({
@@ -33,9 +36,13 @@ export default class Pictograph extends Component {
     });
   }
 
+  componentWillUnmount() {
+    this.unsubscribe();
+  }
+
   render() {
     const pictographsRows = this.state.pictographs.map(pictograph =>
-      <div className="pc-table--row">
+      <div key={pictograph.id} className="pc-table--row">
         <div className="pc-table--cell">
           {pictograph.term}
         </div>
@@ -79,7 +86,7 @@ export default class Pictograph extends Component {
                     onClick={event => this.handleInputClick(event)}
                     className="pc-pictograph--codes-input"
                     type="text"
-                    value={this.state.image.url}
+                    defaultValue={this.state.image.url}
                   />
                 </div>
                 <div className="pc-pictograph--codes-group">
@@ -90,7 +97,8 @@ export default class Pictograph extends Component {
                     onClick={event => this.handleInputClick(event)}
                     className="pc-pictograph--codes-input"
                     type="text"
-                    value={`<img alt="perro" src="${this.state.image.url}"/>`}
+                    defaultValue={`<img alt="perro" src="${this.state.image
+                      .url}"/>`}
                   />
                 </div>
                 <div className="pc-pictograph--codes-group">
@@ -99,7 +107,7 @@ export default class Pictograph extends Component {
                     onClick={event => this.handleInputClick(event)}
                     className="pc-pictograph--codes-input"
                     type="text"
-                    value={`[img]${this.state.image.url}[/img]`}
+                    defaultValue={`[img]${this.state.image.url}[/img]`}
                   />
                 </div>
               </div>

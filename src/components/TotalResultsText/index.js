@@ -1,30 +1,37 @@
 import React, { Component } from "react";
 import Store from "../../stores/Store";
+import { fetchCountByQuery } from "../../stores/Pictographs";
 
 export default class TotalResultsText extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      query: props.query
+    };
   }
 
   componentWillMount() {
-    this.setState({
-      query: this.props.query
-    });
+    Store.dispatch(fetchCountByQuery(this.props.query));
 
-    Store.subscribe(() => {
+    this.unsuscribe = Store.subscribe(() => {
       const pictographsStore = Store.getState().pictographs;
 
       this.setState({
-        totalFound: pictographsStore.totalFound
+        totalFound: pictographsStore.countByQuery
       });
     });
   }
 
   componentWillReceiveProps(newProps) {
+    Store.dispatch(fetchCountByQuery(newProps.query));
+
     this.setState({
       query: newProps.query
     });
+  }
+
+  componentWillUnmount() {
+    this.unsuscribe();
   }
 
   render() {

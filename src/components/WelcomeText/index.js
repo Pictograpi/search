@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import Store from "../../stores/Store";
-import { pictographsFetchTotal } from "../../stores/Pictographs";
+import { fetchTotalPictographs } from "../../stores/Pictographs";
 
 export default class Welcome extends Component {
   constructor(props) {
@@ -9,13 +9,17 @@ export default class Welcome extends Component {
   }
 
   componentWillMount() {
-    Store.dispatch(pictographsFetchTotal());
+    Store.dispatch(fetchTotalPictographs());
 
-    Store.subscribe(() => {
+    this.unsuscribe = Store.subscribe(() => {
       this.setState({
         total: Store.getState().pictographs.total
       });
     });
+  }
+
+  componentWillUnmount() {
+    this.unsuscribe();
   }
 
   render() {

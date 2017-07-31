@@ -4,49 +4,54 @@ import {
   getTotalPictographs,
   getPictographsByQuery,
   getPictographsByImageId,
-  getImageById
+  getImageById,
+  getCountByQuery
 } from "../services/api";
+
+const ACTIONS = {
+  SEARCH: "PICTOGRAPHS_FETCH_BY_QUERY",
+  TOTAL: "PICTOGRAPHS_FETCH_TOTAL",
+  PICTOGRAPHS_BY_ID: "PICTOGRAPHS_FETCH_ID",
+  IMAGE_BY_ID: "PICTOGRAPHS_FETCH_IMAGE_BY_ID",
+  COUNT_BY_QUERY: "PICTOGRAPHS_FETCH_COUNT_BY_QUERY"
+};
 
 const LIMIT_PER_PAGE = 25;
 
 const PictographReducer = (state = [], action) => {
   switch (action.type) {
-    case "PICTOGRAPHS_FETCH_LAST": {
-      state = {
-        ...state,
-        isSearch: false,
-        last: action.payload.items
-      };
-      break;
-    }
-    case "PICTOGRAPHS_FETCH_TOTAL": {
+    case ACTIONS.TOTAL: {
       state = {
         ...state,
         total: action.payload.total
       };
       break;
     }
-    case "PICTOGRAPHS_FETCH_SEARCH": {
+    case ACTIONS.SEARCH: {
       state = {
         ...state,
-        isSearch: true,
-        found: action.payload.items,
-        query: action.payload.query,
-        totalFound: action.payload.total
+        pictographsByQuery: action.payload.pictographsByQuery
       };
       break;
     }
-    case "PICTOGRAPHS_FETCH_ID": {
+    case ACTIONS.PICTOGRAPHS_BY_ID: {
       state = {
         ...state,
         pictographsById: action.payload.pictographsById
       };
       break;
     }
-    case "PICTOGRAPHS_FETCH_IMAGE_BY_ID": {
+    case ACTIONS.IMAGE_BY_ID: {
       state = {
         ...state,
         imageById: action.payload.imageById
+      };
+      break;
+    }
+    case ACTIONS.COUNT_BY_QUERY: {
+      state = {
+        ...state,
+        countByQuery: action.payload.countByQuery
       };
       break;
     }
@@ -55,137 +60,121 @@ const PictographReducer = (state = [], action) => {
   return state;
 };
 
-/**
- * Action launched when fecthing last success.
- *
- * @param {any} pictographs
- * @returns
- */
-function pictographsFetchLastSuccess(pictographs) {
-  return {
-    type: "PICTOGRAPHS_FETCH_LAST",
-    payload: {
-      items: pictographs.map(pictograph => ({
-        url: pictograph.url,
-        id: pictograph.id
-      }))
-    }
-  };
-}
-
-/**
- * Action launched when fecthing total success.
- *
- * @param {any} total
- * @returns
- */
-function pictographsFetchTotalSuccess(response) {
-  return {
-    type: "PICTOGRAPHS_FETCH_TOTAL",
-    payload: {
-      total: response.count
-    }
-  };
-}
-
-/**
- * Action launched when fecthing pictographs by query success.
- *
- * @param {any} response
- * @param {string} query
- * @returns
- */
-function pictographsFetchSearchSuccess(response, query) {
-  return {
-    type: "PICTOGRAPHS_FETCH_SEARCH",
-    payload: {
-      items: response.pictographs.map(pictograph => ({
-        url: pictograph.image.url,
-        id: pictograph.imageId,
-        pictographId: pictograph.id
-      })),
-      total: response.total,
-      query
-    }
-  };
-}
-
-function pictographsByImageIdSuccess(response) {
-  return {
-    type: "PICTOGRAPHS_FETCH_ID",
-    payload: {
-      pictographsById: response.map(pictograph => ({
-        term: pictograph.term,
-        languageCode: pictograph.language.code,
-        languageName: pictograph.language.name,
-        typeCode: pictograph.type.code,
-        typeName: pictograph.type.name
-      }))
-    }
-  };
-}
-
-function pictographsImageByIdSuccess(response) {
-  return {
-    type: "PICTOGRAPHS_FETCH_IMAGE_BY_ID",
-    payload: {
-      imageById: {
-        name: response.name,
-        url: response.url,
-        externalId: response.extId
-      }
-    }
-  };
-}
-
 export default PictographReducer;
 
 /**
- * Fetch last pictographs.
+ * Fetches total pictographs.
  *
  * @export
- * @returns
+ * @returns {Promise} To be resolved when finished.
  */
-export function pictographsFetchLast(page) {
-  const offset = page * LIMIT_PER_PAGE;
-
-  return async dispatch => {
-    let response = await getLastPictographs(offset, LIMIT_PER_PAGE);
-
-    dispatch(pictographsFetchLastSuccess(response));
-  };
-}
-
-export function pictographsFetchTotal() {
+export function fetchTotalPictographs() {
   return async dispatch => {
     let response = await getTotalPictographs();
 
-    dispatch(pictographsFetchTotalSuccess(response));
+    dispatch({
+      type: ACTIONS.TOTAL,
+      payload: {
+        total: response.count
+      }
+    });
   };
 }
 
-export function pictographsSearch(query, page) {
+/**
+ * Fetches pictographs by a given query.
+ *
+ * @export
+ * @param {string} query Query to search pictographs.
+ * @param {number} page Page to calculate the offset/limit.
+ * @returns {Promise} To be resolved when finished.
+ */
+export function fetchPictographsByQuery(query, page) {
   const offset = page * LIMIT_PER_PAGE;
 
   return async dispatch => {
     let response = await getPictographsByQuery(query, offset, LIMIT_PER_PAGE);
 
-    dispatch(pictographsFetchSearchSuccess(response, query));
+    dispatch({
+      type: ACTIONS.SEARCH,
+      payload: {
+        pictographsByQuery: response.map(pictograph => ({
+          url: pictograph.image.url,
+          id: pictograph.imageId,
+          pictographId: pictograph.id
+        }))
+      }
+    });
   };
 }
 
-export function pictographsByImageId(imageId) {
+/**
+ * Fetches pictographs by image id.
+ *
+ * @export
+ * @param {number} imageId Image id.
+ * @returns {Promise} To be resolved when finished.
+ */
+export function fetchPictographsByImageId(imageId) {
   return async dispatch => {
     let response = await getPictographsByImageId(imageId);
 
-    dispatch(pictographsByImageIdSuccess(response));
+    dispatch({
+      type: ACTIONS.PICTOGRAPHS_BY_ID,
+      payload: {
+        pictographsById: response.map(pictograph => ({
+          id: pictograph.id,
+          term: pictograph.term,
+          languageCode: pictograph.language.code,
+          languageName: pictograph.language.name,
+          typeCode: pictograph.type.code,
+          typeName: pictograph.type.name
+        }))
+      }
+    });
   };
 }
 
-export function imageById(id) {
+/**
+ * Fetches image by a given id.
+ *
+ * @export
+ * @param {number} id Image id.
+ * @returns {Promise} To be resolved when finished.
+ */
+export function fetchImageById(id) {
   return async dispatch => {
     let response = await getImageById(id);
 
-    dispatch(pictographsImageByIdSuccess(response));
+    dispatch({
+      type: ACTIONS.IMAGE_BY_ID,
+      payload: {
+        imageById: {
+          name: response.name,
+          url: response.url,
+          externalId: response.extId
+        }
+      }
+    });
+  };
+}
+
+/**
+ * Fetches count by a given query.
+ *
+ * @export
+ * @param {string} query Query to obtain its count.
+ * @returns {Promise} To be resolved when finished.
+ */
+export function fetchCountByQuery(query) {
+  return async dispatch => {
+    let response = await getCountByQuery(query);
+
+    dispatch({
+      type: ACTIONS.COUNT_BY_QUERY,
+      payload: {
+        countByQuery: response.count
+      }
+    });
   };
 }

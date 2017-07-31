@@ -91,7 +91,7 @@ export async function getPictographsByQueryTotal(query) {
  * @returns {Promise} To be resolved with an Array of pictographs.
  */
 export async function getPictographsByQuery(query, offset, limit) {
-  const pictographs = await doGet("Pictograms", {
+  return doGet("Pictograms", {
     filter: JSON.stringify({
       offset,
       limit,
@@ -109,7 +109,10 @@ export async function getPictographsByQuery(query, offset, limit) {
       }
     })
   });
-  const total = await doGet("Pictograms/count", {
+}
+
+export async function getCountByQuery(query) {
+  return doGet("Pictograms/count", {
     where: JSON.stringify({
       term: {
         like: query
@@ -117,11 +120,6 @@ export async function getPictographsByQuery(query, offset, limit) {
       languageId: "58fa1b203852d50029a048a7"
     })
   });
-
-  return {
-    pictographs,
-    total: total.count
-  };
 }
 
 export function getPictographsByImageId(imageId) {

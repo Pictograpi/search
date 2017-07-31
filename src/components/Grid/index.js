@@ -1,11 +1,13 @@
 import React, { Component } from "react";
 import Store from "../../stores/Store";
-import { pictographsSearch } from "../../stores/Pictographs";
+import { fetchPictographsByQuery } from "../../stores/Pictographs";
 
 export default class Grid extends Component {
-  constructor() {
-    super();
-    this.state = {};
+  constructor(props) {
+    super(props);
+    this.state = {
+      page: props.page
+    };
   }
 
   handleClickImage(event, id) {
@@ -14,15 +16,13 @@ export default class Grid extends Component {
   }
 
   componentWillMount() {
-    this.setState({ page: this.props.page });
+    Store.dispatch(fetchPictographsByQuery(this.props.query, this.props.page));
 
-    Store.dispatch(pictographsSearch(this.props.query, this.props.page));
-
-    Store.subscribe(() => {
+    this.unsubscribe = Store.subscribe(() => {
       const pictographsStore = Store.getState().pictographs;
 
       this.setState({
-        found: pictographsStore.found
+        found: pictographsStore.pictographsByQuery
       });
     });
   }
@@ -31,7 +31,11 @@ export default class Grid extends Component {
     this.setState({
       found: []
     });
-    Store.dispatch(pictographsSearch(nextProps.query, nextProps.page));
+    Store.dispatch(fetchPictographsByQuery(nextProps.query, nextProps.page));
+  }
+
+  componentWillUnmount() {
+    this.unsubscribe();
   }
 
   render() {

@@ -3,8 +3,9 @@ import React, { Component } from "react";
 export default class Search extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
-    this.query = "";
+    this.state = {
+      query: props.query
+    };
   }
 
   /**
@@ -28,10 +29,6 @@ export default class Search extends Component {
     this.setState({
       query: event.target.value
     });
-  }
-
-  componentWillMount() {
-    this.props.query && this.setState({ query: this.props.query });
   }
 
   render() {

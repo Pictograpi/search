@@ -6,30 +6,31 @@ import { Link } from "react-router-dom";
 export default class Pagination extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
-  }
-
-  loadState(page) {
-    this.setState({
-      page: Number.parseInt(page || 0),
-      pathname: this.props.history.location.pathname
-    });
+    this.state = {
+      page: props.page,
+      pathname: props.history.location.pathname
+    };
   }
 
   componentWillMount() {
-    this.loadState(this.props.page);
-
-    Store.subscribe(() => {
+    this.unsubscribe = Store.subscribe(() => {
       const pictographsStore = Store.getState().pictographs;
 
       this.setState({
-        totalFound: pictographsStore.totalFound
+        totalFound: pictographsStore.countByQuery
       });
     });
   }
 
   componentWillReceiveProps(nextProps) {
-    this.loadState(nextProps.page);
+    this.setState({
+      page: Number.parseInt(nextProps.page || 0),
+      pathname: nextProps.history.location.pathname
+    });
+  }
+
+  componentWillUnmount() {
+    this.unsubscribe();
   }
 
   render() {
