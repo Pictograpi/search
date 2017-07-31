@@ -123,3 +123,15 @@ export async function getPictographsByQuery(query, offset, limit) {
     total: total.count
   };
 }
+
+export function getPictographsByImageId(imageId) {
+  return doGet(`Images/${imageId}/pictograms`, {
+    filter: JSON.stringify({
+      include: ["language", "type"]
+    })
+  });
+}
+
+export function getImageById(id) {
+  return doGet(`Images/${id}`);
+}

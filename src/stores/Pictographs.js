@@ -2,7 +2,9 @@ import Store from "./Store";
 import {
   getLastPictographs,
   getTotalPictographs,
-  getPictographsByQuery
+  getPictographsByQuery,
+  getPictographsByImageId,
+  getImageById
 } from "../services/api";
 
 const LIMIT_PER_PAGE = 25;
@@ -31,6 +33,20 @@ const PictographReducer = (state = [], action) => {
         found: action.payload.items,
         query: action.payload.query,
         totalFound: action.payload.total
+      };
+      break;
+    }
+    case "PICTOGRAPHS_FETCH_ID": {
+      state = {
+        ...state,
+        pictographsById: action.payload.pictographsById
+      };
+      break;
+    }
+    case "PICTOGRAPHS_FETCH_IMAGE_BY_ID": {
+      state = {
+        ...state,
+        imageById: action.payload.imageById
       };
       break;
     }
@@ -94,6 +110,34 @@ function pictographsFetchSearchSuccess(response, query) {
   };
 }
 
+function pictographsByImageIdSuccess(response) {
+  return {
+    type: "PICTOGRAPHS_FETCH_ID",
+    payload: {
+      pictographsById: response.map(pictograph => ({
+        term: pictograph.term,
+        languageCode: pictograph.language.code,
+        languageName: pictograph.language.name,
+        typeCode: pictograph.type.code,
+        typeName: pictograph.type.name
+      }))
+    }
+  };
+}
+
+function pictographsImageByIdSuccess(response) {
+  return {
+    type: "PICTOGRAPHS_FETCH_IMAGE_BY_ID",
+    payload: {
+      imageById: {
+        name: response.name,
+        url: response.url,
+        externalId: response.extId
+      }
+    }
+  };
+}
+
 export default PictographReducer;
 
 /**
@@ -127,5 +171,21 @@ export function pictographsSearch(query, page) {
     let response = await getPictographsByQuery(query, offset, LIMIT_PER_PAGE);
 
     dispatch(pictographsFetchSearchSuccess(response, query));
+  };
+}
+
+export function pictographsByImageId(imageId) {
+  return async dispatch => {
+    let response = await getPictographsByImageId(imageId);
+
+    dispatch(pictographsByImageIdSuccess(response));
+  };
+}
+
+export function imageById(id) {
+  return async dispatch => {
+    let response = await getImageById(id);
+
+    dispatch(pictographsImageByIdSuccess(response));
   };
 }

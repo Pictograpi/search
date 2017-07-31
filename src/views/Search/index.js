@@ -19,7 +19,7 @@ export default class Search extends Component {
 
     return (
       <div className="pc-container pc-search">
-        <div className="pc-search--form-wrapper">
+        <div className="pc-container--bg-title">
           <div className="pc-container--content">
             <SearchForm history={this.props.history} query={query} />
             <TotalResultsText query={query} />

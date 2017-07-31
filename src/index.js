@@ -6,6 +6,7 @@ import Header from "./components/Header";
 import Footer from "./components/Footer";
 import Home from "./views/Home";
 import Search from "./views/Search";
+import Pictograph from "./views/Pictograph";
 import Store from "./stores/Store";
 
 // Initialize Firebase.
@@ -36,6 +37,7 @@ render(
       <Header />
       <Route exact path="/" component={Home} />
       <Route path="/search/:query" component={Search} />
+      <Route path="/pictograph/:id" component={Pictograph} />
       <Footer />
     </div>
   </BrowserRouter>,
