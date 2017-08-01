@@ -75,7 +75,7 @@ export default class Header extends Component {
           </h1>
           <div className="pc-header--menu">
             <nav className="pc-header--navigation">
-              {!this.state.isLoggedIn &&
+              {/*{!this.state.isLoggedIn &&
                 <a className="pc-header--navigation-link" onClick={this.signIn}>
                   Sign in
                 </a>}
@@ -85,7 +85,7 @@ export default class Header extends Component {
                   onClick={this.singOut}
                 >
                   Sing out
-                </a>}
+                </a>}*/}
               <a
                 className="pc-header--navigation-link"
                 href="http://pictograpi.com/#contact"
@@ -94,8 +94,8 @@ export default class Header extends Component {
                 Contact Us
               </a>
             </nav>
-            {this.state.isLoggedIn &&
-              <img className="pc-header--photo" src={this.state.photo} />}
+            {/*this.state.isLoggedIn &&
+              <img className="pc-header--photo" src={this.state.photo} />*/}
           </div>
         </div>
       </header>

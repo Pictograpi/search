@@ -4,6 +4,7 @@ import {
   fetchPictographsByImageId,
   fetchImageById
 } from "../../stores/Pictographs";
+import { BrowserRouter } from "react-router-dom";
 
 export default class Pictograph extends Component {
   constructor(props) {
@@ -16,6 +17,11 @@ export default class Pictograph extends Component {
 
   handleInputClick(event) {
     event.target.select();
+  }
+
+  handleBackClick(event) {
+    event.preventDefault();
+    this.props.history.goBack();
   }
 
   componentWillMount() {
@@ -65,9 +71,12 @@ export default class Pictograph extends Component {
       <div className="pc-container pc-pictograph">
         <div className="pc-container--bg-title">
           <div className="pc-container--content">
-            <h1 className="pc-pictograph--title">
-              Showing image {this.state.image.name}
-            </h1>
+            <button
+              onClick={event => this.handleBackClick(event)}
+              className="pc-pictograph--title pc-button__back"
+            >
+              Back to results
+            </button>
           </div>
         </div>
         <div className="pc-container--content pc-pictograph--main">
@@ -83,10 +92,11 @@ export default class Pictograph extends Component {
                     Direct link:
                   </label>
                   <input
+                    readOnly
                     onClick={event => this.handleInputClick(event)}
                     className="pc-pictograph--codes-input"
                     type="text"
-                    defaultValue={this.state.image.url}
+                    value={this.state.image.url}
                   />
                 </div>
                 <div className="pc-pictograph--codes-group">
@@ -94,20 +104,21 @@ export default class Pictograph extends Component {
                     HMTL Code:
                   </label>
                   <input
+                    readOnly
                     onClick={event => this.handleInputClick(event)}
                     className="pc-pictograph--codes-input"
                     type="text"
-                    defaultValue={`<img alt="perro" src="${this.state.image
-                      .url}"/>`}
+                    value={`<img alt="perro" src="${this.state.image.url}"/>`}
                   />
                 </div>
                 <div className="pc-pictograph--codes-group">
                   <label className="pc-pictograph--codes-label">BBCode:</label>
                   <input
+                    readOnly
                     onClick={event => this.handleInputClick(event)}
                     className="pc-pictograph--codes-input"
                     type="text"
-                    defaultValue={`[img]${this.state.image.url}[/img]`}
+                    value={`[img]${this.state.image.url}[/img]`}
                   />
                 </div>
               </div>
