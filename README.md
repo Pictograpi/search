@@ -1,20 +1,19 @@
-# pictograpi-collaborate
-PictograpiCollaborate is a website where anybody may suggest a new Pictogram to be included in the Pictograpi. PictograpiCollaborate is part of the [PictograpiUniverse](http://pictograpi.com) and uses pictographs created by [ARASAAC](http://arasaac.org).
+# pictograpi-search
+PictograpiSearch is a website where anybody may suggest a new Pictogram to be included in the Pictograpi. PictograpiSearch is part of the [PictograpiUniverse](http://pictograpi.com) and uses pictographs created by [ARASAAC](http://arasaac.org).
 
 # Development
-PictograpiCollaborate has been created using ReactJS + Webpack and it offers these tasks:
+PictograpiSearch has been created using ReactJS + Webpack and it offers these tasks:
 - ``npm run test``: Runs tests
 - ``npm run dev``: Compiles the code and launches a server to test while development.
 - ``npm run build``: Builds the code into ``./dist`` folder.
 
 # Configuration
-PictograpiCollaborate needs some properties to work. These properties must be set using environmnent properties or creating a ``/.env`` file.
+PictograpiSearch needs some properties to work. These properties must be set using environmnent properties or creating a ``/.env`` file.
 ```
-# Firebase configuration
-FIREBASE_API_KEY
-FIREBASE_AUTH_DOMAIN
-FIREBASE_DATABASE_URL
-FIREBASE_PROJECT_ID
+# Pictograpi configuration
+PICTOGRAPI_EMAIL=foo@pictograpi.com
+PICTOGRAPI_PASSWORD=token
+PICTOGRAPI_URL=https://api.pictograpi.com/api
 ```
 
 # Credits

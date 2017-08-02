@@ -3,15 +3,22 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
 const LessPluginGlob = require("less-plugin-glob");
 const Dotenv = require("dotenv-webpack");
+const BabiliPlugin = require("babili-webpack-plugin");
+const CleanWebpackPlugin = require("clean-webpack-plugin");
 const DEFAULT_CONFIG = {
   entry: ["./src/index.js", "./src/style.less"],
   output: {
-    path: path.resolve(__dirname, "dist"),
+    path: path.resolve(__dirname, "public"),
     filename: "[name].js"
   },
   plugins: [
+    new CleanWebpackPlugin(["public"], {
+      root: path.resolve(__dirname),
+      verbose: true,
+      dry: false
+    }),
     new HtmlWebpackPlugin({
-      title: "Pictograpi Collaborate",
+      title: "Pictograpi Search",
       hash: true,
       template: "./src/index.ejs"
     }),
@@ -34,7 +41,12 @@ const DEFAULT_CONFIG = {
         use: ExtractTextPlugin.extract({
           fallback: "style-loader",
           use: [
-            "css-loader",
+            {
+              loader: "css-loader",
+              options: {
+                minimize: true
+              }
+            },
             {
               loader: "less-loader",
               options: {
@@ -61,7 +73,7 @@ function createDev() {
 
   config.devtool = "inline-source-map";
   config.devServer = {
-    contentBase: path.join(__dirname, "dist"),
+    contentBase: path.join(__dirname, "public"),
     compress: true,
     port: 8080,
     historyApiFallback: true
@@ -77,6 +89,8 @@ function createDev() {
  */
 function createBuild() {
   let config = Object.assign({}, DEFAULT_CONFIG);
+
+  config.plugins.push(new BabiliPlugin());
 
   return config;
 }

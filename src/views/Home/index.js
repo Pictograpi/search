@@ -13,7 +13,7 @@ export default class Home extends Component {
 
   render() {
     return (
-      <div className="pc-home">
+      <div className="ps-home">
         <WelcomeText />
         <SearchForm history={this.props.history} />
         <SuggestButton />

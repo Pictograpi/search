@@ -24,7 +24,7 @@ export default class Suggest extends Component {
     return (
       <button
         onClick={event => this.handleClick(event)}
-        className="pc-button pc-suggest-button"
+        className="ps-button ps-suggest-button"
       >
         Suggest a pictograph
       </button>

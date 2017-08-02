@@ -34,7 +34,7 @@ export default class Search extends Component {
   render() {
     return (
       <form
-        className="pc-search-form"
+        className="ps-search-form"
         onSubmit={event => this.handleSubmit(event)}
       >
         <input

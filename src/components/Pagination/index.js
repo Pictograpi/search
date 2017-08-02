@@ -42,15 +42,15 @@ export default class Pagination extends Component {
     for (let i = 0; i <= this.state.page; i++) {
       let isSelected = this.state.page === i;
 
-      // "pc-grid--pagination-item__selected"
+      // "ps-grid--pagination-item__selected"
       paginationButtons.push(
         <Link
           to={{
             pathname: this.state.pathname,
             search: `?page=${i}`
           }}
-          className={`pc-button pc-pagination--item ${isSelected &&
-            "pc-pagination--item__selected"}`}
+          className={`ps-button ps-pagination--item ${isSelected &&
+            "ps-pagination--item__selected"}`}
           key={i}
         >
           {i + 1}
@@ -59,11 +59,11 @@ export default class Pagination extends Component {
     }
 
     return (
-      <div className="pc-pagination">
+      <div className="ps-pagination">
         {paginationButtons}
         {isNextShown &&
           <Link
-            className="pc-button pc-pagination--item"
+            className="ps-button ps-pagination--item"
             to={{
               pathname: this.state.pathname,
               search: `?page=${this.state.page + 1}`

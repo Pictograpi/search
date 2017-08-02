@@ -1,7 +1,7 @@
 {
-  "name": "pictograpi-collaborate",
+  "name": "pictograpi-search",
   "version": "1.0.0",
-  "description": "A collaboration website for Pictograpi.",
+  "description": "A search website for Pictograpi.",
   "main": "index.js",
   "scripts": {
     "_webpack": "webpack --config webpack.conf.js",
@@ -9,20 +9,21 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "eslint ./src/**/*.js",
     "dev": "npm run _webpack-dev-server",
-    "build": "npm run _webpack"
+    "build": "npm run _webpack",
+    "deploy": "npm run build && firebase deploy"
   },
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@bitbucket.org/adgllorente/pictograpi-collaborate.git"
+    "url": "git+ssh://git@bitbucket.org/adgllorente/pictograpi-search.git"
   },
   "keywords": [
-    "collaborate",
+    "search",
     "pictograpi",
     "pictograph"
   ],
   "author": "Adrián Gómez - http://adgllorente.com",
   "license": "MIT",
-  "homepage": "https://bitbucket.org/adgllorente/pictograpi-collaborate#readme",
+  "homepage": "https://bitbucket.org/adgllorente/pictograpi-search#readme",
   "devDependencies": {
     "babel-core": "^6.25.0",
     "babel-loader": "^7.1.1",
@@ -30,6 +31,8 @@
     "babel-preset-es2017": "^6.24.1",
     "babel-preset-react": "^6.24.1",
     "babel-preset-stage-2": "^6.24.1",
+    "babili-webpack-plugin": "^0.1.2",
+    "clean-webpack-plugin": "^0.1.16",
     "css-loader": "^0.28.4",
     "dotenv-webpack": "^1.5.4",
     "eslint": "^4.3.0",
@@ -46,11 +49,11 @@
     "loglevel": "^1.4.1",
     "prettier": "^1.5.3",
     "style-loader": "^0.18.2",
+    "uglifyjs-webpack-plugin": "^0.4.6",
     "webpack": "^3.3.0",
     "webpack-dev-server": "^2.6.0"
   },
   "dependencies": {
-    "firebase": "^4.1.5",
     "isomorphic-fetch": "^2.2.1",
     "normalize.css": "^7.0.0",
     "prop-types": "^15.5.10",

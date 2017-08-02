@@ -44,16 +44,16 @@ export default class Grid extends Component {
         <a
           key={pictograph.pictographId}
           onClick={event => this.handleClickImage(event, pictograph.id)}
-          className="pc-grid--pic"
+          className="ps-grid--pic"
         >
-          <img className="pc-grid--image" src={pictograph.url} />
+          <img className="ps-grid--image" src={pictograph.url} />
         </a>
       );
     });
 
     return (
-      <div className="pc-grid">
-        <div className="pc-grid--content">
+      <div className="ps-grid">
+        <div className="ps-grid--content">
           {pictographElements}
         </div>
       </div>

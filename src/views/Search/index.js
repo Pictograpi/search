@@ -18,14 +18,14 @@ export default class Search extends Component {
     const page = queryString.parse(this.props.history.location.search).page;
 
     return (
-      <div className="pc-container pc-search">
-        <div className="pc-container--bg-title">
-          <div className="pc-container--content">
+      <div className="ps-container ps-search">
+        <div className="ps-container--bg-title">
+          <div className="ps-container--content">
             <SearchForm history={this.props.history} query={query} />
             <TotalResultsText query={query} />
           </div>
         </div>
-        <div className="pc-container--content pc-search--results-wrapper">
+        <div className="ps-container--content ps-search--results-wrapper">
           <Grid history={this.props.history} query={query} page={page} />
           <Pagination page={page} history={this.props.history} />
         </div>
