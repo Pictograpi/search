@@ -5,6 +5,7 @@ const LessPluginGlob = require("less-plugin-glob");
 const Dotenv = require("dotenv-webpack");
 const BabiliPlugin = require("babili-webpack-plugin");
 const CleanWebpackPlugin = require("clean-webpack-plugin");
+const webpack = require("webpack");
 const DEFAULT_CONFIG = {
   entry: ["./src/index.js", "./src/style.less"],
   output: {
@@ -12,6 +13,7 @@ const DEFAULT_CONFIG = {
     filename: "[name].js"
   },
   plugins: [
+    new Dotenv(),
     new CleanWebpackPlugin(["public"], {
       root: path.resolve(__dirname),
       verbose: true,
@@ -22,8 +24,7 @@ const DEFAULT_CONFIG = {
       hash: true,
       template: "./src/index.ejs"
     }),
-    new ExtractTextPlugin("[name].css"),
-    new Dotenv()
+    new ExtractTextPlugin("[name].css")
   ],
   module: {
     loaders: [
@@ -91,6 +92,11 @@ function createBuild() {
   let config = Object.assign({}, DEFAULT_CONFIG);
 
   config.plugins.push(new BabiliPlugin());
+  config.plugins.push(
+    new webpack.DefinePlugin({
+      "process.env.NODE_ENV": JSON.stringify("production")
+    })
+  );
 
   return config;
 }
