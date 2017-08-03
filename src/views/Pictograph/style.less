@@ -16,11 +16,19 @@
   &--row {
     display: flex;
     margin: 30px 0;
+
+    @media only screen and (orientation: portrait) {
+      flex-wrap: wrap;
+    }
   }
 
   &--column {
     height: 100%;
     padding: 10px;
+
+    @media only screen and (orientation: portrait) {
+      flex-grow: 1;
+    }
 
     &:first-of-type {
       flex-basis: 30%;
