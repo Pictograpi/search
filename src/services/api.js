@@ -76,7 +76,7 @@ export async function getPictographsByQueryTotal(query) {
   return doGet("Pictograms/count", {
     where: {
       term: {
-        like: query
+        like: query.toLowerCase()
       },
       languageId: "58fa1b203852d50029a048a7"
     }
@@ -97,7 +97,7 @@ export async function getPictographsByQuery(query, offset, limit) {
       limit,
       where: {
         term: {
-          like: query
+          like: query.toLowerCase()
         },
         languageId: "58fa1b203852d50029a048a7"
       },
@@ -115,7 +115,7 @@ export async function getCountByQuery(query) {
   return doGet("Pictograms/count", {
     where: JSON.stringify({
       term: {
-        like: query
+        like: query.toLowerCase()
       },
       languageId: "58fa1b203852d50029a048a7"
     })
