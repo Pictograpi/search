@@ -16,8 +16,8 @@
 
     &__selected {
       background-color: white !important;
-      border: 3px solid #00c78a !important;
-      color: #00c78a !important;
+      border: 3px solid $primary-color !important;
+      color: $primary-color !important;
     }
   }
 }
