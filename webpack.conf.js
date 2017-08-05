@@ -1,13 +1,12 @@
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
-const LessPluginGlob = require("less-plugin-glob");
 const Dotenv = require("dotenv-webpack");
 const BabiliPlugin = require("babili-webpack-plugin");
 const CleanWebpackPlugin = require("clean-webpack-plugin");
 const webpack = require("webpack");
 const DEFAULT_CONFIG = {
-  entry: ["./src/index.js", "./src/style.less"],
+  entry: ["./src/index.js", "./src/style.scss"],
   output: {
     path: path.resolve(__dirname, "public"),
     filename: "[name].js"
@@ -38,24 +37,15 @@ const DEFAULT_CONFIG = {
         use: ["file-loader"]
       },
       {
-        test: /\.less$/,
+        test: /\.scss$/,
         use: ExtractTextPlugin.extract({
-          fallback: "style-loader",
           use: [
-            {
-              loader: "css-loader",
-              options: {
-                minimize: true
-              }
-            },
-            {
-              loader: "less-loader",
-              options: {
-                plugins: [LessPluginGlob],
-                paths: [path.resolve(path.join(__dirname, "src"))]
-              }
-            }
-          ]
+            "css-loader?sourceMap",
+            "resolve-url-loader",
+            "sass-loader?sourceMap",
+            "import-glob-loader"
+          ],
+          fallback: "style-loader"
         })
       }
     ]

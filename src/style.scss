@@ -1,10 +1,8 @@
-// https://p.w3layouts.com/demos/photo_hub/web/index.html;
-
 @import "~normalize.css/normalize.css";
 @import "~sweetalert2/dist/sweetalert2.css";
 @import url('https://fonts.googleapis.com/css?family=Quicksand');
-@import "components/**/style.less";
-@import "views/**/style.less";
+@import "components/**/style.scss";
+@import "views/**/style.scss";
 
 // General
 body {
