@@ -1,12 +1,13 @@
 // Externals
 @import "~normalize.css/normalize.css";
 @import "~sweetalert2/dist/sweetalert2.css";
-
-// Fonts
+@import "~flag-icon-css/sass/_flag-icon";
 @import url('https://fonts.googleapis.com/css?family=Quicksand');
 
 // Internals
+@import "~bulma/sass/utilities/initial-variables";
 @import "variables";
 @import "base";
 @import "components/**/style.scss";
 @import "views/**/style.scss";
+@import "~bulma/bulma";

@@ -24,7 +24,7 @@ export default class Welcome extends Component {
 
   render() {
     return (
-      <h1 className="ps-welcome-text">
+      <h1 className="title">
         We have {this.state.total} pictographs in different languages.
       </h1>
     );

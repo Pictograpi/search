@@ -36,9 +36,11 @@ export default class TotalResultsText extends Component {
 
   render() {
     return (
-      <p className="ps-search--results-message">
-        {this.state.totalFound} results for {this.state.query}
-      </p>
+      <div className="container">
+        <h1 className="title">
+          {this.state.totalFound} results found for "{this.state.query}"
+        </h1>
+      </div>
     );
   }
 }

@@ -3,7 +3,6 @@ import SearchForm from "../../components/SearchForm";
 import Grid from "../../components/Grid";
 import Store from "../../stores/Store";
 import WelcomeText from "../../components/WelcomeText";
-import SuggestButton from "../../components/SuggestButton";
 
 export default class Home extends Component {
   constructor(props) {
@@ -13,11 +12,14 @@ export default class Home extends Component {
 
   render() {
     return (
-      <div className="ps-home">
-        <WelcomeText />
-        <SearchForm history={this.props.history} />
-        <SuggestButton />
-      </div>
+      <section className="hero is-primary is-large">
+        <div className="hero-body">
+          <div className="container has-text-centered">
+            <WelcomeText />
+            <SearchForm history={this.props.history} />
+          </div>
+        </div>
+      </section>
     );
   }
 }

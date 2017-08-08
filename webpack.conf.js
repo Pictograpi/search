@@ -33,7 +33,7 @@ const DEFAULT_CONFIG = {
         use: ["babel-loader", "eslint-loader"]
       },
       {
-        test: /\.(woff|woff2|eot|ttf|otf|png|jpg)$/,
+        test: /\.(woff|woff2|eot|ttf|otf|png|jpg|svg)$/,
         use: ["file-loader"]
       },
       {

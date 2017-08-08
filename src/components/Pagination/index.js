@@ -7,7 +7,7 @@ export default class Pagination extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      page: props.page,
+      page: Number.parseInt(props.page || 0),
       pathname: props.history.location.pathname
     };
   }
@@ -34,43 +34,58 @@ export default class Pagination extends Component {
   }
 
   render() {
-    let paginationButtons = [],
-      isNextShown =
-        (this.state.page === 0 && this.state.totalFound > 25) ||
-        this.state.totalFound / 25 >= this.state.page + 1;
+    const paginationButtons = [];
+    const isNextShown =
+      (this.state.page === 0 && this.state.totalFound > 30) ||
+      this.state.totalFound / 30 >= this.state.page + 1;
+    const isPreviousShown = this.state.page > 0;
+    let isSelected, i;
 
-    for (let i = 0; i <= this.state.page; i++) {
-      let isSelected = this.state.page === i;
+    for (i = 0; i <= this.state.page; i++) {
+      isSelected = this.state.page === i;
 
-      // "ps-grid--pagination-item__selected"
       paginationButtons.push(
-        <Link
-          to={{
-            pathname: this.state.pathname,
-            search: `?page=${i}`
-          }}
-          className={`ps-button ps-pagination--item ${isSelected &&
-            "ps-pagination--item__selected"}`}
-          key={i}
-        >
-          {i + 1}
-        </Link>
+        <li key={i}>
+          <Link
+            to={{
+              pathname: this.state.pathname,
+              search: `?page=${i}`
+            }}
+            className={`pagination-link ${isSelected && "is-current"}`}
+          >
+            {i + 1}
+          </Link>
+        </li>
       );
     }
 
     return (
-      <div className="ps-pagination">
-        {paginationButtons}
-        {isNextShown &&
-          <Link
-            className="ps-button ps-pagination--item"
-            to={{
-              pathname: this.state.pathname,
-              search: `?page=${this.state.page + 1}`
-            }}
-          >
-            Next
-          </Link>}
+      <div className="ps-pagination container">
+        <nav className="pagination is-centered">
+          {isPreviousShown &&
+            <Link
+              to={{
+                pathname: this.state.pathname,
+                search: `?page=${this.state.page - 1}`
+              }}
+              className="pagination-previous"
+            >
+              Previous page
+            </Link>}
+          {isNextShown &&
+            <Link
+              className="pagination-next"
+              to={{
+                pathname: this.state.pathname,
+                search: `?page=${this.state.page + 1}`
+              }}
+            >
+              Next page
+            </Link>}
+          <ul className="pagination-list">
+            {paginationButtons}
+          </ul>
+        </nav>
       </div>
     );
   }

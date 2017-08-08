@@ -16,7 +16,7 @@ const ACTIONS = {
   COUNT_BY_QUERY: "PICTOGRAPHS_FETCH_COUNT_BY_QUERY"
 };
 
-const LIMIT_PER_PAGE = 25;
+const LIMIT_PER_PAGE = 30;
 
 const PictographReducer = (state = [], action) => {
   switch (action.type) {

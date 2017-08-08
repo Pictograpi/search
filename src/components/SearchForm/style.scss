@@ -1,16 +1,6 @@
 .ps-search-form {
-  display: flex;
-  width: 80%;
-  max-width: 800px;
-
-  > input[type=text],
-  > button {
-    display: block;
-  }
-
-  > input[type=text] {
-    flex: 1;
-    padding: 20px;
-    border: 0;
+  &--flag {
+    margin-left: 5px;
+    height: 50%;
   }
 }
