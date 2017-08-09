@@ -23,11 +23,15 @@ export default class TotalResultsText extends Component {
   }
 
   componentWillReceiveProps(newProps) {
-    Store.dispatch(fetchCountByQuery(newProps.query));
+    const isQueryUpdated = this.state.query !== newProps.query;
 
-    this.setState({
-      query: newProps.query
-    });
+    if (isQueryUpdated) {
+      Store.dispatch(fetchCountByQuery(newProps.query));
+
+      this.setState({
+        query: newProps.query
+      });
+    }
   }
 
   componentWillUnmount() {
