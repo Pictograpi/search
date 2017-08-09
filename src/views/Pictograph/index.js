@@ -53,13 +53,13 @@ export default class Pictograph extends Component {
         <td>
           {pictograph.term}
         </td>
-        <td>
+        <td className="is-hidden-mobile">
           {pictograph.languageCode}
         </td>
         <td>
           {pictograph.languageName}
         </td>
-        <td>
+        <td className="is-hidden-mobile">
           {pictograph.typeCode}
         </td>
         <td>
@@ -178,10 +178,10 @@ export default class Pictograph extends Component {
                 <thead>
                   <tr>
                     <th>Term</th>
-                    <th>Language code</th>
+                    <th className="is-hidden-mobile">Language code</th>
                     <th>Language</th>
                     <th>Type</th>
-                    <th>Type code</th>
+                    <th className="is-hidden-mobile">Type code</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -190,10 +190,10 @@ export default class Pictograph extends Component {
                 <tfoot>
                   <tr>
                     <th>Term</th>
-                    <th>Language code</th>
+                    <th className="is-hidden-mobile">Language code</th>
                     <th>Language</th>
                     <th>Type</th>
-                    <th>Type code</th>
+                    <th className="is-hidden-mobile">Type code</th>
                   </tr>
                 </tfoot>
               </table>
