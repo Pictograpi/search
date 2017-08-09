@@ -13,6 +13,8 @@ pipelines:
   branches:
     master:
       - step:
+          caches:
+            - node
           script:
             - npm install -g firebase-tools
             - npm install
