@@ -22,6 +22,13 @@ export default class Header extends Component {
                 >
                   Contact Us
                 </a>
+                <a
+                  className="navbar-item ps-header--navigation-item"
+                  href="http://pictograpi.com"
+                  target="_blank"
+                >
+                  Pictograpi
+                </a>
               </div>
             </div>
           </nav>
