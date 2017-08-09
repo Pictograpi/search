@@ -87,33 +87,41 @@ export default class Pictograph extends Component {
         <div className="container">
           <h1 className="title">Pictograph details</h1>
           <div className="columns">
-            <div className="column is-one-third">
-              <div className="card">
-                <div className="card-image">
-                  <figure className="image is-square">
-                    <img src={this.state.image.url} alt="Image" />
-                  </figure>
-                </div>
-                {/* TODO: Add image info and tags.
-                  <div className="card-content">
-                  <div className="media">
-                    <div className="media-content">
-                      <p className="title is-4">123123123.png</p>
+            <div className="column is-4">
+              <div className="tile is-ancestor">
+                <div className="tile is-parent is-vertical">
+                  <div className="tile is-child notification is-light has-text-centered box">
+                    <img
+                      className="is-square"
+                      src={this.state.image.url}
+                      alt="Image"
+                    />
+                  </div>
+                  <div className="tile notification is-warning is-child box">
+                    <h1 className="title">Information</h1>
+                    <div className="content">
+                      <p>
+                        <b>Name:</b> {this.state.image.name}
+                      </p>
+                      <p>
+                        <b>Created:</b> {this.state.image.created}
+                      </p>
+                      <p>
+                        <b>Type:</b> {this.state.image.type}
+                      </p>
+                      <p>
+                        <b>External ID:</b> {this.state.image.externalId}
+                      </p>
                     </div>
                   </div>
-
-                  <div className="content tags">
-                    <span className="tag is-success">Verb</span>
-                    <span className="tag is-warning">Adjective</span>
-                  </div>
-                </div>*/}
+                </div>
               </div>
             </div>
             <div className="column">
               <div className="tile is-ancestor">
                 <div className="tile is-parent is-vertical">
-                  <article className="tile is-child notification is-primary">
-                    <p className="title">Sharing codes</p>
+                  <div className="tile is-child notification is-primary box">
+                    <h1 className="title">Sharing codes</h1>
                     <p className="subtitle">
                       Copy and paste them in any other place
                     </p>
@@ -127,8 +135,7 @@ export default class Pictograph extends Component {
                           type="text"
                           readOnly
                           onClick={event => this.handleInputClick(event)}
-                          value={`<img alt="perro" src="${this.state.image
-                            .url}"/>`}
+                          value={`<img src="${this.state.image.url}"/>`}
                         />
                       </div>
                       <p className="help">
@@ -171,32 +178,34 @@ export default class Pictograph extends Component {
                         site.
                       </p>
                     </div>
-                  </article>
+                  </div>
+                  <div className="tile is-child box">
+                    <table className="table is-fullwidth is-striped">
+                      <thead>
+                        <tr>
+                          <th>Term</th>
+                          <th className="is-hidden-mobile">Language code</th>
+                          <th>Language</th>
+                          <th>Type</th>
+                          <th className="is-hidden-mobile">Type code</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {pictographsRows}
+                      </tbody>
+                      <tfoot>
+                        <tr>
+                          <th>Term</th>
+                          <th className="is-hidden-mobile">Language code</th>
+                          <th>Language</th>
+                          <th>Type</th>
+                          <th className="is-hidden-mobile">Type code</th>
+                        </tr>
+                      </tfoot>
+                    </table>
+                  </div>
                 </div>
               </div>
-              <table className="table is-fullwidth is-striped">
-                <thead>
-                  <tr>
-                    <th>Term</th>
-                    <th className="is-hidden-mobile">Language code</th>
-                    <th>Language</th>
-                    <th>Type</th>
-                    <th className="is-hidden-mobile">Type code</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {pictographsRows}
-                </tbody>
-                <tfoot>
-                  <tr>
-                    <th>Term</th>
-                    <th className="is-hidden-mobile">Language code</th>
-                    <th>Language</th>
-                    <th>Type</th>
-                    <th className="is-hidden-mobile">Type code</th>
-                  </tr>
-                </tfoot>
-              </table>
             </div>
           </div>
         </div>

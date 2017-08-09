@@ -152,7 +152,9 @@ export function fetchImageById(id) {
         imageById: {
           name: response.name,
           url: response.url,
-          externalId: response.extId
+          externalId: response.extId,
+          type: response.type,
+          created: response.created
         }
       }
     });
