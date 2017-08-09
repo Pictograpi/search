@@ -12,7 +12,9 @@ const DEFAULT_CONFIG = {
     filename: "[name].js"
   },
   plugins: [
-    new Dotenv(),
+    new Dotenv({
+      systemvars: true
+    }),
     new CleanWebpackPlugin(["public"], {
       root: path.resolve(__dirname),
       verbose: true,
