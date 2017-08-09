@@ -3,6 +3,8 @@ import queryString from "query-string";
 
 let token;
 
+const LANGUAGE_ID = "58fa1b203852d50029a048a7";
+
 async function doGet(route, options) {
   let params;
 
@@ -72,17 +74,6 @@ export function getTotalPictographs() {
   return doGet("Pictograms/count");
 }
 
-export async function getPictographsByQueryTotal(query) {
-  return doGet("Pictograms/count", {
-    where: {
-      term: {
-        like: query.toLowerCase()
-      },
-      languageId: "58fa1b203852d50029a048a7"
-    }
-  });
-}
-
 /**
  * Obtains pictographs with a given query.
  *
@@ -97,9 +88,9 @@ export async function getPictographsByQuery(query, offset, limit) {
       limit,
       where: {
         term: {
-          like: query.toLowerCase()
+          regexp: new RegExp(`^${query}$`, "i").toString()
         },
-        languageId: "58fa1b203852d50029a048a7"
+        languageId: LANGUAGE_ID
       },
       include: {
         relation: "image",
@@ -115,9 +106,9 @@ export async function getCountByQuery(query) {
   return doGet("Pictograms/count", {
     where: JSON.stringify({
       term: {
-        like: query.toLowerCase()
+        regexp: new RegExp(`^${query}$`, "i").toString()
       },
-      languageId: "58fa1b203852d50029a048a7"
+      languageId: LANGUAGE_ID
     })
   });
 }
