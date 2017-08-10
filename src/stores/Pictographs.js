@@ -5,12 +5,14 @@ import {
   getPictographsByQuery,
   getPictographsByImageId,
   getImageById,
-  getCountByQuery
+  getCountByQuery,
+  getTotalImages
 } from "../services/api";
 
 const ACTIONS = {
   SEARCH: "PICTOGRAPHS_FETCH_BY_QUERY",
   TOTAL: "PICTOGRAPHS_FETCH_TOTAL",
+  TOTAL_IMAGES: "PICTOGRAPHS_FETCH_TOTAL_IMAGES",
   PICTOGRAPHS_BY_ID: "PICTOGRAPHS_FETCH_ID",
   IMAGE_BY_ID: "PICTOGRAPHS_FETCH_IMAGE_BY_ID",
   COUNT_BY_QUERY: "PICTOGRAPHS_FETCH_COUNT_BY_QUERY"
@@ -55,6 +57,12 @@ const PictographReducer = (state = [], action) => {
       };
       break;
     }
+    case ACTIONS.TOTAL_IMAGES: {
+      state = {
+        ...state,
+        totalImages: action.payload.totalImages
+      };
+    }
   }
 
   return state;
@@ -76,6 +84,25 @@ export function fetchTotalPictographs() {
       type: ACTIONS.TOTAL,
       payload: {
         total: response.count
+      }
+    });
+  };
+}
+
+/**
+ * Fetches total images.
+ *
+ * @export
+ * @returns {Promise} To be resolved when finished.
+ */
+export function fetchTotalImages() {
+  return async dispatch => {
+    let response = await getTotalImages();
+
+    dispatch({
+      type: ACTIONS.TOTAL_IMAGES,
+      payload: {
+        totalImages: response.count
       }
     });
   };

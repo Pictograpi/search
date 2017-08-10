@@ -3,8 +3,16 @@ import queryString from "query-string";
 
 let token;
 
+// Spanish language id.
 const LANGUAGE_ID = "58fa1b203852d50029a048a7";
 
+/**
+ * Requests to a given route of the api with given options.
+ *
+ * @param {string} route Route to request.
+ * @param {Object} options Options to include in the request.
+ * @returns {Promise} To be resolved with the response.
+ */
 async function doGet(route, options) {
   let params;
 
@@ -75,6 +83,16 @@ export function getTotalPictographs() {
 }
 
 /**
+ * Obtains total images in the API.
+ *
+ * @export
+ * @returns {Promise} To be resolved with a number.
+ */
+export function getTotalImages() {
+  return doGet("Images/count");
+}
+
+/**
  * Obtains pictographs with a given query.
  *
  * @export
@@ -102,6 +120,13 @@ export async function getPictographsByQuery(query, offset, limit) {
   });
 }
 
+/**
+ * Obtains count by a given query.
+ *
+ * @export
+ * @param {string} query Query to filter the count.
+ * @returns {Promise} To be resolved with a total count.
+ */
 export async function getCountByQuery(query) {
   return doGet("Pictograms/count", {
     where: JSON.stringify({
@@ -113,6 +138,13 @@ export async function getCountByQuery(query) {
   });
 }
 
+/**
+ * Obtains pictographs associated to an image id.
+ *
+ * @export
+ * @param {string} imageId Image id.
+ * @returns {Promise} To be resolved with an array of pictographs.
+ */
 export function getPictographsByImageId(imageId) {
   return doGet(`Images/${imageId}/pictograms`, {
     filter: JSON.stringify({
@@ -121,6 +153,13 @@ export function getPictographsByImageId(imageId) {
   });
 }
 
+/**
+ * Obtains an image by a given id.
+ *
+ * @export
+ * @param {string} id Image id.
+ * @returns {Promise} To be resolved with an image.
+ */
 export function getImageById(id) {
   return doGet(`Images/${id}`);
 }

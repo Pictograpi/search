@@ -1,6 +1,9 @@
 import React, { Component } from "react";
 import Store from "../../stores/Store";
-import { fetchTotalPictographs } from "../../stores/Pictographs";
+import {
+  fetchTotalPictographs,
+  fetchTotalImages
+} from "../../stores/Pictographs";
 
 export default class Welcome extends Component {
   constructor(props) {
@@ -10,10 +13,12 @@ export default class Welcome extends Component {
 
   componentWillMount() {
     Store.dispatch(fetchTotalPictographs());
+    Store.dispatch(fetchTotalImages());
 
     this.unsuscribe = Store.subscribe(() => {
       this.setState({
-        total: Store.getState().pictographs.total
+        total: Store.getState().pictographs.total,
+        totalImages: Store.getState().pictographs.totalImages
       });
     });
   }
@@ -25,7 +30,7 @@ export default class Welcome extends Component {
   render() {
     return (
       <h1 className="title">
-        We have {this.state.total} pictographs in different languages.
+        We have {this.state.total} words and {this.state.totalImages} images.
       </h1>
     );
   }
