@@ -12,7 +12,8 @@ const LanguageReducer = (state = {}, action) => {
     case ACTIONS.ALL: {
       state = {
         ...state,
-        all: action.payload.all
+        all: action.payload.all,
+        selected: action.payload.all[0]
       };
       break;
     }

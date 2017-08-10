@@ -21,10 +21,17 @@ export default class Search extends Component {
    */
   handleSubmit(event) {
     event.preventDefault();
+
+    if (!this.state.query) {
+      return;
+    }
+
     this.setState({
       isDropdownVisible: false
     });
-    this.props.history.push(`/search/${this.state.query}`);
+    this.props.history.push(
+      `/search/${this.state.query}?languageId=${this.state.selected.id}`
+    );
   }
 
   /**
@@ -68,9 +75,7 @@ export default class Search extends Component {
     Store.subscribe(() => {
       this.setState({
         languages: Store.getState().languages.all,
-        selected:
-          Store.getState().languages.selected ||
-          Store.getState().languages.all[0]
+        selected: Store.getState().languages.selected
       });
     });
   }
