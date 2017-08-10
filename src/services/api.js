@@ -1,10 +1,12 @@
 import fetch from "isomorphic-fetch";
 import queryString from "query-string";
+import Store from "../stores/Store";
 
 let token;
 
 // Spanish language id.
 const DEFAULT_LANGUAGE_ID = "58fa1b203852d50029a048a7";
+
 /**
  * Requests to a given route of the api with given options.
  *
@@ -107,7 +109,7 @@ export async function getPictographsByQuery(query, offset, limit) {
         term: {
           regexp: new RegExp(`^${query}$`, "i").toString()
         },
-        languageId: DEFAULT_LANGUAGE_ID
+        languageId: Store.getState().languages.selectedId
       },
       include: {
         relation: "image",
@@ -132,7 +134,7 @@ export async function getCountByQuery(query) {
       term: {
         regexp: new RegExp(`^${query}$`, "i").toString()
       },
-      languageId: DEFAULT_LANGUAGE_ID
+      languageId: Store.getState().languages.selectedId
     })
   });
 }

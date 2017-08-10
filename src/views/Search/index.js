@@ -4,11 +4,20 @@ import SearchForm from "../../components/SearchForm";
 import Grid from "../../components/Grid";
 import Pagination from "../../components/Pagination";
 import queryString from "query-string";
+import Store from "../../stores/Store";
+import { storeSelectedLanguageId } from "../../stores/Languages";
 
 export default class Search extends Component {
   constructor(props) {
     super(props);
     this.state = {};
+  }
+
+  componentWillMount() {
+    const languageId = queryString.parse(this.props.history.location.search)
+      .languageId;
+
+    Store.dispatch(storeSelectedLanguageId(languageId));
   }
 
   render() {

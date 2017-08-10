@@ -57,7 +57,11 @@ export default class Grid extends Component {
 
     return (
       <div>
-        <TotalResultsText query={this.state.query} />
+        <div className="container">
+          <h1 className="title">
+            {(this.state.found || []).length} results found for "{this.state.query}"
+          </h1>
+        </div>
         <div className="section">
           <div className="container">
             <div className="columns is-multiline ps-grid">

@@ -12,8 +12,7 @@ const LanguageReducer = (state = {}, action) => {
     case ACTIONS.ALL: {
       state = {
         ...state,
-        all: action.payload.all,
-        selected: action.payload.all[0]
+        all: action.payload.all
       };
       break;
     }
@@ -27,7 +26,7 @@ const LanguageReducer = (state = {}, action) => {
     case ACTIONS.STORE_SELECTED: {
       state = {
         ...state,
-        selected: action.payload.selected
+        selectedId: action.payload.selectedId
       };
       break;
     }
@@ -84,15 +83,15 @@ export function fetchTotalLanguages() {
  * Stores selected language.
  *
  * @export
- * @param {Object} language Language to store.
+ * @param {Object} languageId Language to store.
  * @returns {Object} Dispatched action.
  */
-export function storeSelectedLanguage(language) {
+export function storeSelectedLanguageId(languageId) {
   return dispatch => {
     dispatch({
       type: ACTIONS.STORE_SELECTED,
       payload: {
-        selected: language
+        selectedId: languageId
       }
     });
   };

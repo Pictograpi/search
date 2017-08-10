@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import Store from "../../stores/Store";
 import {
   fetchAllLanguages,
-  storeSelectedLanguage
+  storeSelectedLanguageId
 } from "../../stores/Languages";
 
 export default class Search extends Component {
@@ -30,7 +30,8 @@ export default class Search extends Component {
       isDropdownVisible: false
     });
     this.props.history.push(
-      `/search/${this.state.query}?languageId=${this.state.selected.id}`
+      `/search/${this.state.query}?languageId=${this.state.selectedId ||
+        this.state.languages[0].id}`
     );
   }
 
@@ -47,10 +48,10 @@ export default class Search extends Component {
     });
   }
 
-  handleDropdownItemClick(event, language) {
+  handleDropdownItemClick(event, languageId) {
     event.preventDefault();
 
-    Store.dispatch(storeSelectedLanguage(language));
+    Store.dispatch(storeSelectedLanguageId(languageId));
 
     this.setState({
       isDropdownVisible: false
@@ -75,7 +76,7 @@ export default class Search extends Component {
     Store.subscribe(() => {
       this.setState({
         languages: Store.getState().languages.all,
-        selected: Store.getState().languages.selected
+        selectedId: Store.getState().languages.selectedId
       });
     });
   }
@@ -83,11 +84,15 @@ export default class Search extends Component {
   render() {
     const dropdownClasses = `dropdown ${this.state.isDropdownVisible &&
       "is-active"}`;
+    const selectedLanguage =
+      (this.state.languages || [])
+        .filter(lang => lang.id === this.state.selectedId)[0] ||
+      (this.state.languages || [])[0];
     const languageElements = (this.state.languages || []).map(language =>
       <a
         className="dropdown-item is-dropdown-dark is-dropdown-with-flag"
         key={language.id}
-        onClick={event => this.handleDropdownItemClick(event, language)}
+        onClick={event => this.handleDropdownItemClick(event, language.id)}
       >
         <i
           className={`icon is-small has-flag has-flag-${language.code.toLowerCase()}`}
@@ -112,8 +117,8 @@ export default class Search extends Component {
                   aria-controls="dropdown-menu"
                 >
                   <i
-                    className={`icon is-small has-flag has-flag-${this.state
-                      .selected && this.state.selected.code.toLowerCase()}`}
+                    className={`icon is-small has-flag has-flag-${selectedLanguage &&
+                      selectedLanguage.code.toLowerCase()}`}
                   />
                   <span className="icon is-medium">
                     <i className="fa fa-angle-down" aria-hidden="true" />
