@@ -57,7 +57,9 @@
   },
   "dependencies": {
     "bulma": "^0.5.1",
+    "downloadjs": "^1.4.7",
     "flag-icon-css": "^2.8.0",
+    "font-awesome": "^4.7.0",
     "isomorphic-fetch": "^2.2.1",
     "normalize.css": "^7.0.0",
     "prop-types": "^15.5.10",

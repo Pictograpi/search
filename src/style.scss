@@ -2,11 +2,13 @@
 @import "~normalize.css/normalize.css";
 @import "~sweetalert2/dist/sweetalert2.css";
 @import "~flag-icon-css/sass/_flag-icon";
+@import "~font-awesome/scss/font-awesome.scss";
 @import url('https://fonts.googleapis.com/css?family=Quicksand');
 
 // Internals
 @import "~bulma/sass/utilities/initial-variables";
 @import "variables";
+@import "base";
 @import "components/**/style.scss";
 @import "views/**/style.scss";
 @import "~bulma/bulma";

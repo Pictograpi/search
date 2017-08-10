@@ -6,6 +6,7 @@ import {
   fetchImageById
 } from "../../stores/Pictographs";
 import { BrowserRouter } from "react-router-dom";
+import downloadJs from "downloadjs";
 
 export default class Pictograph extends Component {
   constructor(props) {
@@ -18,11 +19,26 @@ export default class Pictograph extends Component {
 
   handleInputClick(event) {
     event.target.select();
+    event.target.setSelectionRange(0, event.target.value.length);
   }
 
   handleBackClick(event) {
     event.preventDefault();
     this.props.history.goBack();
+  }
+
+  handleDownloadClick(event) {
+    var x = new XMLHttpRequest();
+    x.open("GET", this.state.image.url, true);
+    x.responseType = "blob";
+    x.onload = function(e) {
+      downloadJs(
+        e.target.response,
+        `pictograpi-search-image-${Date.now()}.png`,
+        "image/png"
+      );
+    };
+    x.send();
   }
 
   componentWillMount() {
@@ -90,12 +106,20 @@ export default class Pictograph extends Component {
             <div className="column is-4">
               <div className="tile is-ancestor">
                 <div className="tile is-parent is-vertical">
-                  <div className="tile is-child notification is-light has-text-centered box">
-                    <img
-                      className="is-square"
-                      src={this.state.image.url}
-                      alt="Image"
-                    />
+                  <div className="tile is-child notification is-light box">
+                    <figure className="image is-square">
+                      <img src={this.state.image.url} alt="Image" />
+                    </figure>
+                    <div className="content has-margin-top has-text-centered">
+                      <button
+                        onClick={() => this.handleDownloadClick()}
+                        className="button is-medium"
+                      >
+                        <span className="icon is-medium">
+                          <i className="fa fa-download" aria-hidden="true" />
+                        </span>
+                      </button>
+                    </div>
                   </div>
                   <div className="tile notification is-warning is-child box">
                     <h1 className="title">Information</h1>
