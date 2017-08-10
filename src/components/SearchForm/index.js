@@ -1,4 +1,9 @@
 import React, { Component } from "react";
+import Store from "../../stores/Store";
+import {
+  fetchAllLanguages,
+  storeSelectedLanguage
+} from "../../stores/Languages";
 
 export default class Search extends Component {
   constructor(props) {
@@ -16,7 +21,33 @@ export default class Search extends Component {
    */
   handleSubmit(event) {
     event.preventDefault();
+    this.setState({
+      isDropdownVisible: false
+    });
     this.props.history.push(`/search/${this.state.query}`);
+  }
+
+  /**
+   * Toggles dropdown when it is clicked.
+   *
+   * @param {any} event
+   * @memberof Search
+   */
+  handleDropdownClick(event) {
+    event.preventDefault();
+    this.setState({
+      isDropdownVisible: !this.state.isDropdownVisible
+    });
+  }
+
+  handleDropdownItemClick(event, language) {
+    event.preventDefault();
+
+    Store.dispatch(storeSelectedLanguage(language));
+
+    this.setState({
+      isDropdownVisible: false
+    });
   }
 
   /**
@@ -31,7 +62,35 @@ export default class Search extends Component {
     });
   }
 
+  componentWillMount() {
+    Store.dispatch(fetchAllLanguages());
+
+    Store.subscribe(() => {
+      this.setState({
+        languages: Store.getState().languages.all,
+        selected:
+          Store.getState().languages.selected ||
+          Store.getState().languages.all[0]
+      });
+    });
+  }
+
   render() {
+    const dropdownClasses = `dropdown ${this.state.isDropdownVisible &&
+      "is-active"}`;
+    const languageElements = (this.state.languages || []).map(language =>
+      <a
+        className="dropdown-item is-dropdown-dark is-dropdown-with-flag"
+        key={language.id}
+        onClick={event => this.handleDropdownItemClick(event, language)}
+      >
+        <i
+          className={`icon is-small has-flag has-flag-${language.code.toLowerCase()}`}
+        />
+        {language.name}
+      </a>
+    );
+
     return (
       <form
         className="ps-search-form"
@@ -39,12 +98,38 @@ export default class Search extends Component {
       >
         <div className="field has-addons has-addons-centered">
           <div className="control">
+            <div className={dropdownClasses}>
+              <div className="dropdown-trigger">
+                <a
+                  onClick={event => this.handleDropdownClick(event)}
+                  className="button is-large"
+                  aria-haspopup="true"
+                  aria-controls="dropdown-menu"
+                >
+                  <i
+                    className={`icon is-small has-flag has-flag-${this.state
+                      .selected && this.state.selected.code.toLowerCase()}`}
+                  />
+                  <span className="icon is-medium">
+                    <i className="fa fa-angle-down" aria-hidden="true" />
+                  </span>
+                </a>
+              </div>
+              <div className="dropdown-menu" id="dropdown-menu" role="menu">
+                <div className="dropdown-content">
+                  {languageElements}
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="control">
             <input
               className="input is-large"
               type="text"
               placeholder="Find in Pictograpi"
               value={this.state.query}
               onChange={event => this.handleQueryEntry(event)}
+              onSubmit={event => this.handleQueryEntry(event)}
             />
           </div>
           <div className="control">
@@ -52,8 +137,7 @@ export default class Search extends Component {
               className="button is-warning is-large"
               onClick={event => this.handleSubmit(event)}
             >
-              Search in{" "}
-              <i className="ps-search-form--flag flag-icon flag-icon-es" />
+              Search
             </a>
           </div>
         </div>

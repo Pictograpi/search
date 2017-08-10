@@ -1,3 +1,68 @@
 .has-margin-top {
   margin-top: 16px;
 }
+
+.is-dropdown-dark {
+  color: $black !important;
+}
+
+.is-dropdown-with-flag {
+  display: flex !important;
+  align-items: center;
+}
+
+.has-flag {
+  background-size: 100% 65%;
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
+  min-width: 20px;
+  margin-right: 5px;
+
+  &-ca-es {
+    background-image: url('./assets/ca-es.png');
+  }
+
+  &-de-de {
+    background-image: url('./assets/de-de.png');
+  }
+
+  &-en-uk {
+    background-image: url('./assets/en-uk.png');
+  }
+
+  &-es-es {
+    background-image: url('./assets/es-es.png');
+  }
+
+  &-eu-es {
+    background-image: url('./assets/eu-es.png');
+  }
+
+  &-fr-fr {
+    background-image: url('./assets/fr-fr.png');
+  }
+
+  &-gl-es {
+    background-image: url('./assets/gl-es.png');
+  }
+
+  &-it-it {
+    background-image: url('./assets/it-it.png');
+  }
+
+  &-gl-es {
+    background-image: url('./assets/gl-es.png');
+  }
+
+  &-it-it {
+    background-image: url('./assets/it-it.png');
+  }
+
+  &-pt-br {
+    background-image: url('./assets/pt-br.png');
+  }
+
+  &-pt-pt {
+    background-image: url('./assets/pt-pt.png');
+  }
+}

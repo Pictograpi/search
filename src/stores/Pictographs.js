@@ -20,7 +20,7 @@ const ACTIONS = {
 
 const LIMIT_PER_PAGE = 30;
 
-const PictographReducer = (state = [], action) => {
+const PictographReducer = (state = {}, action) => {
   switch (action.type) {
     case ACTIONS.TOTAL: {
       state = {

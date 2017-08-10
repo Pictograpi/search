@@ -4,8 +4,7 @@ import queryString from "query-string";
 let token;
 
 // Spanish language id.
-const LANGUAGE_ID = "58fa1b203852d50029a048a7";
-
+const DEFAULT_LANGUAGE_ID = "58fa1b203852d50029a048a7";
 /**
  * Requests to a given route of the api with given options.
  *
@@ -108,7 +107,7 @@ export async function getPictographsByQuery(query, offset, limit) {
         term: {
           regexp: new RegExp(`^${query}$`, "i").toString()
         },
-        languageId: LANGUAGE_ID
+        languageId: DEFAULT_LANGUAGE_ID
       },
       include: {
         relation: "image",
@@ -133,7 +132,7 @@ export async function getCountByQuery(query) {
       term: {
         regexp: new RegExp(`^${query}$`, "i").toString()
       },
-      languageId: LANGUAGE_ID
+      languageId: DEFAULT_LANGUAGE_ID
     })
   });
 }
@@ -162,4 +161,24 @@ export function getPictographsByImageId(imageId) {
  */
 export function getImageById(id) {
   return doGet(`Images/${id}`);
+}
+
+/**
+ * Obtains all languages
+ *
+ * @export
+ * @returns {Promise} To be resolved with languages.
+ */
+export function getLanguages() {
+  return doGet(`Languages`);
+}
+
+/**
+ * Obtains total languages
+ *
+ * @export
+ * @returns {Promise} To be resolved with total languages.
+ */
+export function getTotalLanguages() {
+  return doGet(`Languages/count`);
 }
