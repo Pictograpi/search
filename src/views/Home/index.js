@@ -52,8 +52,8 @@ export default class Home extends Component {
                     the grid of pictographs.
                   </p>
                   <p>
-                    If you've found too many results you can{" "}
-                    <b>repeat the search</b> with a more specific term.
+                    Too many results? Filter them using a more specific term or
+                    RegExp.
                   </p>
                 </div>
               </div>
