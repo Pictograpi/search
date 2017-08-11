@@ -30,7 +30,7 @@ export default class Search extends Component {
       isDropdownVisible: false
     });
     this.props.history.push(
-      `/search/${this.state.query}?languageId=${this.state.selectedId ||
+      `/search/${this.state.query.trim()}?languageId=${this.state.selectedId ||
         this.state.languages[0].id}`
     );
   }
