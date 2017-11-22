@@ -80,7 +80,7 @@ export function getLastPictographs(offset, limit) {
  * @returns {Promise} To be resolved with a number.
  */
 export function getTotalPictographs() {
-  return doGet("Pictograms/count");
+  return doGet("Pictographs/count");
 }
 
 /**
@@ -101,7 +101,7 @@ export function getTotalImages() {
  * @returns {Promise} To be resolved with an Array of pictographs.
  */
 export async function getPictographsByQuery(query, offset, limit) {
-  return doGet("Pictograms", {
+  return doGet("Pictographs", {
     filter: JSON.stringify({
       offset,
       limit,
@@ -129,7 +129,7 @@ export async function getPictographsByQuery(query, offset, limit) {
  * @returns {Promise} To be resolved with a total count.
  */
 export async function getCountByQuery(query) {
-  return doGet("Pictograms/count", {
+  return doGet("Pictographs/count", {
     where: JSON.stringify({
       term: {
         regexp: new RegExp(`^${query}$`, "i").toString()
@@ -147,7 +147,7 @@ export async function getCountByQuery(query) {
  * @returns {Promise} To be resolved with an array of pictographs.
  */
 export function getPictographsByImageId(imageId) {
-  return doGet(`Images/${imageId}/pictograms`, {
+  return doGet(`Images/${imageId}/Pictographs`, {
     filter: JSON.stringify({
       include: ["language", "type"]
     })
